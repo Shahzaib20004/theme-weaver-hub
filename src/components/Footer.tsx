@@ -52,13 +52,13 @@ const Footer = () => {
                   <p className="text-sm text-text-secondary">Call us anytime</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-gold flex-shrink-0" />
-                <div>
-                  <p className="text-foreground font-medium">info@kaar.rentals</p>
-                  <p className="text-sm text-text-secondary">Email support</p>
+                <div className="flex items-center gap-3">
+                  <Mail className="w-5 h-5 text-gold flex-shrink-0" />
+                  <div>
+                    <p className="text-foreground font-medium">kaar.rentals@gmail.com</p>
+                    <p className="text-sm text-text-secondary">Email support</p>
+                  </div>
                 </div>
-              </div>
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-gold flex-shrink-0 mt-1" />
                 <div>

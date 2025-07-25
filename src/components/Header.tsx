@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Phone, MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -25,7 +26,9 @@ const Header = () => {
 
           {/* Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
-            <Button variant="nav" className="text-sm font-medium">ALL CARS</Button>
+            <Link to="/cars">
+              <Button variant="nav" className="text-sm font-medium">ALL CARS</Button>
+            </Link>
             <Button variant="nav" className="text-sm font-medium">OUR CARS</Button>
             <Button variant="nav" className="text-sm font-medium">CAR BRANDS</Button>
             <Button variant="nav" className="text-sm font-medium">DAILY OFFERS</Button>
@@ -33,6 +36,12 @@ const Header = () => {
             <Button variant="nav" className="text-sm font-medium">ABOUT US</Button>
             <Button variant="nav" className="text-sm font-medium">BLOG</Button>
             <Button variant="nav" className="text-sm font-medium">CONTACT US</Button>
+            <Link to="/login">
+              <Button variant="nav" className="text-sm font-medium">LOGIN</Button>
+            </Link>
+            <Link to="/add-car">
+              <Button variant="premium" className="text-sm font-medium">LIST CAR</Button>
+            </Link>
           </nav>
 
           {/* Right Section */}
@@ -107,7 +116,9 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         <nav className="lg:hidden flex flex-wrap gap-4 mt-4 pt-4 border-t border-border">
-          <Button variant="nav" size="sm">ALL CARS</Button>
+          <Link to="/cars">
+            <Button variant="nav" size="sm">ALL CARS</Button>
+          </Link>
           <Button variant="nav" size="sm">OUR CARS</Button>
           <Button variant="nav" size="sm">BRANDS</Button>
           <Button variant="nav" size="sm">OFFERS</Button>
@@ -115,6 +126,12 @@ const Header = () => {
           <Button variant="nav" size="sm">ABOUT</Button>
           <Button variant="nav" size="sm">BLOG</Button>
           <Button variant="nav" size="sm">CONTACT</Button>
+          <Link to="/login">
+            <Button variant="nav" size="sm">LOGIN</Button>
+          </Link>
+          <Link to="/add-car">
+            <Button variant="premium" size="sm">LIST CAR</Button>
+          </Link>
         </nav>
       </div>
     </header>
