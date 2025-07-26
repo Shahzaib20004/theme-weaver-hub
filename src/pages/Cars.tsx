@@ -141,36 +141,36 @@ const Cars = () => {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Select onValueChange={(value) => setFilters({...filters, brand: value})}>
+            <Select onValueChange={(value) => setFilters({...filters, brand: value === "all" ? "" : value})}>
               <SelectTrigger className="bg-dark-surface border-border text-foreground">
                 <SelectValue placeholder="Brand" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Brands</SelectItem>
+                <SelectItem value="all">All Brands</SelectItem>
                 {brands.map(brand => (
                   <SelectItem key={brand} value={brand}>{brand}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
 
-            <Select onValueChange={(value) => setFilters({...filters, category: value})}>
+            <Select onValueChange={(value) => setFilters({...filters, category: value === "all" ? "" : value})}>
               <SelectTrigger className="bg-dark-surface border-border text-foreground">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Categories</SelectItem>
+                <SelectItem value="all">All Categories</SelectItem>
                 {categories.map(category => (
                   <SelectItem key={category} value={category}>{category}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
 
-            <Select onValueChange={(value) => setFilters({...filters, location: value})}>
+            <Select onValueChange={(value) => setFilters({...filters, location: value === "all" ? "" : value})}>
               <SelectTrigger className="bg-dark-surface border-border text-foreground">
                 <SelectValue placeholder="Location" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Locations</SelectItem>
+                <SelectItem value="all">All Locations</SelectItem>
                 {locations.map(location => (
                   <SelectItem key={location} value={location}>{location}</SelectItem>
                 ))}
