@@ -4,46 +4,46 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="bg-black border-b border-silver/20 shadow-elegant">
-      <div className="max-w-7xl mx-auto px-6 py-4">
+    <header className="bg-dark-surface border-b border-border">
+      <div className="max-w-7xl mx-auto px-6 py-3">
         <div className="flex items-center justify-between gap-6">
           {/* Logo Section */}
           <div className="flex-shrink-0">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-gradient-silver rounded-xl flex items-center justify-center text-black font-bold text-2xl shadow-silver">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-gradient-gold rounded-lg flex items-center justify-center text-primary-foreground font-bold text-xl">
                 K
               </div>
               <div className="flex flex-col">
-                <h1 className="text-2xl font-bold text-silver tracking-wide">
+                <h1 className="text-xl font-bold text-gold tracking-wide">
                   Kaar.Rentals
                 </h1>
-                <p className="text-sm text-silver-dark italic">
-                  Premium Car Rentals
+                <p className="text-xs text-text-secondary italic">
+                  Reliable Rides Anytime
                 </p>
               </div>
             </div>
           </div>
 
           {/* Navigation */}
-          <nav className="hidden lg:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-8">
             <Link to="/cars">
-              <Button variant="nav" className="text-sm font-medium hover:text-silver">ALL CARS</Button>
+              <Button variant="nav" className="text-sm font-medium">ALL CARS</Button>
             </Link>
-            <Button variant="nav" className="text-sm font-medium hover:text-silver">OUR CARS</Button>
-            <Button variant="nav" className="text-sm font-medium hover:text-silver">CAR BRANDS</Button>
-            <Button variant="nav" className="text-sm font-medium hover:text-silver">DAILY OFFERS</Button>
-            <Button variant="nav" className="text-sm font-medium hover:text-silver">RENTAL PRICES</Button>
-            <Button variant="nav" className="text-sm font-medium hover:text-silver">ABOUT US</Button>
-            <Button variant="nav" className="text-sm font-medium hover:text-silver">BLOG</Button>
-            <Button variant="nav" className="text-sm font-medium hover:text-silver">CONTACT US</Button>
+            <Button variant="nav" className="text-sm font-medium">OUR CARS</Button>
+            <Button variant="nav" className="text-sm font-medium">CAR BRANDS</Button>
+            <Button variant="nav" className="text-sm font-medium">DAILY OFFERS</Button>
+            <Button variant="nav" className="text-sm font-medium">RENTAL PRICES</Button>
+            <Button variant="nav" className="text-sm font-medium">ABOUT US</Button>
+            <Button variant="nav" className="text-sm font-medium">BLOG</Button>
+            <Button variant="nav" className="text-sm font-medium">CONTACT US</Button>
             <Link to="/admin">
-              <Button variant="nav" className="text-sm font-medium hover:text-silver">ADMIN</Button>
+              <Button variant="nav" className="text-sm font-medium">ADMIN</Button>
             </Link>
             <Link to="/login">
-              <Button variant="nav" className="text-sm font-medium hover:text-silver">LOGIN</Button>
+              <Button variant="nav" className="text-sm font-medium">LOGIN</Button>
             </Link>
             <Link to="/add-car">
-              <Button variant="premium" className="text-sm font-medium px-6">LIST CAR</Button>
+              <Button variant="premium" className="text-sm font-medium">LIST CAR</Button>
             </Link>
           </nav>
 
@@ -62,12 +62,12 @@ const Header = () => {
             </div>
 
             {/* Google Reviews */}
-            <div className="hidden md:flex flex-col items-center gap-1 bg-dark-elevated p-3 rounded-lg min-w-[120px] border border-silver/20 shadow-silver">
-              <div className="text-xs font-bold text-silver">Google</div>
-              <div className="text-xs text-yellow-400">⭐⭐⭐⭐⭐</div>
-              <div className="text-xs text-silver">
+            <div className="hidden md:flex flex-col items-center gap-1 bg-card p-3 rounded-lg min-w-[120px] border border-border">
+              <div className="text-xs font-bold text-blue-500">Google</div>
+              <div className="text-xs text-yellow-500">⭐⭐⭐⭐⭐</div>
+              <div className="text-xs text-card-foreground">
                 <span className="font-bold">4.9</span>
-                <span className="text-silver-dark"> | 5858 reviews</span>
+                <span className="text-muted-foreground"> | 5858 reviews</span>
               </div>
             </div>
 
