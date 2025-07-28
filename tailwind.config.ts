@@ -62,10 +62,10 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				/* Custom automotive theme colors */
-				gold: 'hsl(var(--gold))',
-				'gold-light': 'hsl(var(--gold-light))',
-				'gold-dark': 'hsl(var(--gold-dark))',
+				/* Custom automotive theme colors - Black & Silver */
+				silver: 'hsl(var(--silver))',
+				'silver-light': 'hsl(var(--silver-light))',
+				'silver-dark': 'hsl(var(--silver-dark))',
 				'dark-surface': 'hsl(var(--dark-surface))',
 				'dark-elevated': 'hsl(var(--dark-elevated))',
 				'text-primary': 'hsl(var(--text-primary))',
@@ -74,11 +74,11 @@ export default {
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',
 				'gradient-hero': 'var(--gradient-hero)',
-				'gradient-gold': 'var(--gradient-gold)'
+				'gradient-silver': 'var(--gradient-silver)'
 			},
 			boxShadow: {
 				'elegant': 'var(--shadow-elegant)',
-				'gold': 'var(--shadow-gold)'
+				'silver': 'var(--shadow-silver)'
 			},
 			transitionTimingFunction: {
 				'smooth': 'var(--transition-smooth)'

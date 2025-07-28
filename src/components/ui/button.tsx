@@ -18,10 +18,10 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        /* Automotive themed variants */
-        premium: "bg-gradient-gold text-primary-foreground hover:shadow-gold transform hover:-translate-y-0.5 font-semibold",
-        luxury: "bg-dark-elevated text-gold border border-gold/30 hover:bg-gold hover:text-primary-foreground hover:shadow-gold transform hover:-translate-y-0.5",
-        nav: "text-text-secondary hover:text-gold transition-colors duration-300",
+        /* Black & Silver themed variants */
+        premium: "bg-gradient-silver text-primary-foreground hover:shadow-silver transform hover:-translate-y-0.5 font-semibold",
+        luxury: "bg-dark-elevated text-silver border border-silver/30 hover:bg-silver hover:text-primary-foreground hover:shadow-silver transform hover:-translate-y-0.5",
+        nav: "text-text-secondary hover:text-silver transition-colors duration-300",
       },
       size: {
         default: "h-10 px-4 py-2",
