@@ -36,6 +36,9 @@ const Header = () => {
             <Button variant="nav" className="text-sm font-medium">ABOUT US</Button>
             <Button variant="nav" className="text-sm font-medium">BLOG</Button>
             <Button variant="nav" className="text-sm font-medium">CONTACT US</Button>
+            <Link to="/admin">
+              <Button variant="nav" className="text-sm font-medium">ADMIN</Button>
+            </Link>
             <Link to="/login">
               <Button variant="nav" className="text-sm font-medium">LOGIN</Button>
             </Link>
@@ -126,6 +129,9 @@ const Header = () => {
           <Button variant="nav" size="sm">ABOUT</Button>
           <Button variant="nav" size="sm">BLOG</Button>
           <Button variant="nav" size="sm">CONTACT</Button>
+           <Link to="/admin">
+            <Button variant="nav" size="sm">ADMIN</Button>
+          </Link>
           <Link to="/login">
             <Button variant="nav" size="sm">LOGIN</Button>
           </Link>
