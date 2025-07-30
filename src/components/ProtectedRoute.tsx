@@ -21,10 +21,12 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
       }
 
       try {
-        // Use RPC call to avoid type issues
-        const { data, error } = await supabase.rpc('get_user_role', {
-          user_id: user.id
-        });
+        // Query profiles table directly to get user role
+        const { data, error } = await (supabase as any)
+          .from('profiles')
+          .select('role')
+          .eq('user_id', user.id)
+          .single();
 
         if (error) {
           console.error('Error fetching user role:', error);
