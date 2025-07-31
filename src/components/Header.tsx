@@ -31,14 +31,21 @@ const Header = () => {
             <Link to="/cars">
               <Button variant="nav" className="text-sm font-medium">ALL CARS</Button>
             </Link>
-            <Button variant="nav" className="text-sm font-medium">OUR CARS</Button>
-            <Button variant="nav" className="text-sm font-medium">CAR BRANDS</Button>
+            <Link to="/dealerships">
+              <Button variant="nav" className="text-sm font-medium">DEALERSHIPS</Button>
+            </Link>
+            <Link to="/brands">
+              <Button variant="nav" className="text-sm font-medium">CAR BRANDS</Button>
+            </Link>
             <Link to="/daily-offers">
               <Button variant="nav" className="text-sm font-medium">DAILY OFFERS</Button>
             </Link>
-            <Button variant="nav" className="text-sm font-medium">RENTAL PRICES</Button>
-            <Button variant="nav" className="text-sm font-medium">ABOUT US</Button>
-            <Button variant="nav" className="text-sm font-medium">BLOG</Button>
+            <Link to="/services">
+              <Button variant="nav" className="text-sm font-medium">SERVICES</Button>
+            </Link>
+            <Link to="/about">
+              <Button variant="nav" className="text-sm font-medium">ABOUT US</Button>
+            </Link>
             <Link to="/contact">
               <Button variant="nav" className="text-sm font-medium">CONTACT US</Button>
             </Link>

@@ -26,6 +26,27 @@ const CarCategories = () => {
       count: "120+ cars"
     },
     {
+      id: "crossover",
+      name: "Crossover",
+      icon: Car,
+      description: "Versatile and efficient",
+      count: "65+ cars"
+    },
+    {
+      id: "coupe",
+      name: "Coupe",
+      icon: Zap,
+      description: "Sporty two-door cars",
+      count: "35+ cars"
+    },
+    {
+      id: "convertible",
+      name: "Convertible",
+      icon: Zap,
+      description: "Open-top luxury",
+      count: "15+ cars"
+    },
+    {
       id: "luxury",
       name: "Luxury",
       icon: Zap,

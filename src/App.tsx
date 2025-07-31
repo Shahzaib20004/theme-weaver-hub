@@ -11,6 +11,10 @@ import AddCar from "./pages/AddCar";
 import Admin from "./pages/Admin";
 import Contact from "./pages/Contact";
 import DailyOffers from "./pages/DailyOffers";
+import Dealerships from "./pages/Dealerships";
+import Services from "./pages/Services";
+import Brands from "./pages/Brands";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +34,10 @@ const App = () => (
           <Route path="/admin" element={<Admin />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/daily-offers" element={<DailyOffers />} />
+          <Route path="/dealerships" element={<Dealerships />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/brands" element={<Brands />} />
+          <Route path="/about" element={<About />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
