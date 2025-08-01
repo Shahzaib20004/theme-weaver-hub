@@ -52,56 +52,56 @@ const CarBrands = () => {
       name: "Toyota",
       color: "#D4101E",
       count: brandCounts["Toyota"] || 0,
-      logo: "/brands/toyota.svg"
+      logo: "/brands/toyota.png"
     },
     {
       id: "suzuki",
       name: "Suzuki",
       color: "#E60012",
       count: brandCounts["Suzuki"] || 0,
-      logo: "/brands/suzuki.svg"
+      logo: "/brands/suzuki.png"
     },
     {
       id: "honda",
       name: "Honda",
       color: "#CC0000",
       count: brandCounts["Honda"] || 0,
-      logo: "/brands/honda.svg"
+      logo: "/brands/honda.png"
     },
     {
       id: "hyundai",
       name: "Hyundai",
       color: "#002C5C",
       count: brandCounts["Hyundai"] || 0,
-      logo: "/brands/hyundai.svg"
+      logo: "/brands/hyundai.png"
     },
     {
       id: "kia",
       name: "KIA",
       color: "#05141F",
       count: brandCounts["KIA"] || 0,
-      logo: "/brands/kia.svg"
+      logo: "/brands/kia.png"
     },
     {
       id: "mitsubishi",
       name: "Mitsubishi",
       color: "#DC143C",
       count: brandCounts["Mitsubishi"] || 0,
-      logo: "/brands/mitsubishi.svg"
+      logo: "/brands/mitsubishi.png"
     },
     {
       id: "mg",
       name: "MG",
       color: "#8B0000",
       count: brandCounts["MG"] || 0,
-      logo: "/brands/mg.svg"
+      logo: "/brands/mg.png"
     },
     {
       id: "changan",
       name: "Changan",
       color: "#1E3A8A",
       count: brandCounts["Changan"] || 0,
-      logo: "/brands/changan.svg"
+      logo: "/brands/changan.png"
     },
     {
       id: "haval",
