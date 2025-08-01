@@ -33,9 +33,22 @@ export const handleSupabaseError = (error: any) => {
   return 'An unexpected error occurred'
 }
 
-// Auth helper functions
+// Helper function to format Pakistani phone numbers
+export const formatPakistaniPhone = (phone: string): string => {
+  const cleanPhone = phone.replace(/^\+92/, '').replace(/^92/, '').replace(/\s/g, '')
+  return `+92${cleanPhone}`
+}
+
+// Helper function to validate Pakistani phone numbers
+export const validatePakistaniPhone = (phone: string): boolean => {
+  const pakistaniPhoneRegex = /^(\+92|92)?[0-9]{10}$/
+  return pakistaniPhoneRegex.test(phone.replace(/\s/g, ''))
+}
+
+// Auth helper functions with flexible authentication
 export const auth = {
-  signUp: async (email: string, password: string, userData?: any) => {
+  // Sign up with email (no strict password validation)
+  signUpWithEmail: async (email: string, password: string, userData?: any) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -48,7 +61,24 @@ export const auth = {
     return data
   },
 
-  signIn: async (email: string, password: string) => {
+  // Sign up with phone number
+  signUpWithPhone: async (phone: string, password: string, userData?: any) => {
+    const formattedPhone = formatPakistaniPhone(phone)
+    
+    const { data, error } = await supabase.auth.signUp({
+      phone: formattedPhone,
+      password,
+      options: {
+        data: userData
+      }
+    })
+    
+    if (error) throw new Error(handleSupabaseError(error))
+    return data
+  },
+
+  // Sign in with email
+  signInWithEmail: async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password
@@ -58,18 +88,83 @@ export const auth = {
     return data
   },
 
+  // Sign in with phone number
+  signInWithPhone: async (phone: string, password: string) => {
+    const formattedPhone = formatPakistaniPhone(phone)
+    
+    const { data, error } = await supabase.auth.signInWithPassword({
+      phone: formattedPhone,
+      password
+    })
+    
+    if (error) throw new Error(handleSupabaseError(error))
+    return data
+  },
+
+  // Sign in with OTP (for phone verification)
+  signInWithOTP: async (phone: string) => {
+    const formattedPhone = formatPakistaniPhone(phone)
+    
+    const { data, error } = await supabase.auth.signInWithOtp({
+      phone: formattedPhone
+    })
+    
+    if (error) throw new Error(handleSupabaseError(error))
+    return data
+  },
+
+  // Verify OTP
+  verifyOTP: async (phone: string, token: string) => {
+    const formattedPhone = formatPakistaniPhone(phone)
+    
+    const { data, error } = await supabase.auth.verifyOtp({
+      phone: formattedPhone,
+      token,
+      type: 'sms'
+    })
+    
+    if (error) throw new Error(handleSupabaseError(error))
+    return data
+  },
+
+  // Sign out
   signOut: async () => {
     const { error } = await supabase.auth.signOut()
     if (error) throw new Error(handleSupabaseError(error))
   },
 
+  // Get current user
   getCurrentUser: async () => {
     const { data: { user }, error } = await supabase.auth.getUser()
     if (error) throw new Error(handleSupabaseError(error))
     return user
   },
 
+  // Get current session
+  getCurrentSession: async () => {
+    const { data: { session }, error } = await supabase.auth.getSession()
+    if (error) throw new Error(handleSupabaseError(error))
+    return session
+  },
+
+  // Listen to auth state changes
   onAuthStateChange: (callback: (event: string, session: any) => void) => {
     return supabase.auth.onAuthStateChange(callback)
+  },
+
+  // Reset password
+  resetPassword: async (email: string) => {
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email)
+    if (error) throw new Error(handleSupabaseError(error))
+    return data
+  },
+
+  // Update password
+  updatePassword: async (password: string) => {
+    const { data, error } = await supabase.auth.updateUser({
+      password
+    })
+    if (error) throw new Error(handleSupabaseError(error))
+    return data
   }
 }
