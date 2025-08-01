@@ -2,10 +2,34 @@ import { Button } from "@/components/ui/button";
 import { Phone, MessageCircle, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDealer, setIsDealer] = useState(false);
+  const [dealerName, setDealerName] = useState("");
+  const { user, signOut } = useAuth();
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('is_dealer, dealer_name')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (profile) {
+          setIsDealer(profile.is_dealer || false);
+          setDealerName(profile.dealer_name || "");
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, [user]);
 
   return (
     <header className="bg-dark-surface border-b border-border sticky top-0 z-50">
@@ -20,7 +44,7 @@ const Header = () => {
                   Kaar.Rentals
                 </h1>
                 <p className="text-xs text-text-secondary italic">
-                  Reliable Rides Anytime
+                  {isDealer && dealerName ? dealerName : "Reliable Rides Anytime"}
                 </p>
               </div>
             </div>
@@ -52,9 +76,13 @@ const Header = () => {
             <Link to="/admin">
               <Button variant="nav" className="text-sm font-medium">ADMIN</Button>
             </Link>
-            <Link to="/login">
-              <Button variant="nav" className="text-sm font-medium">LOGIN</Button>
-            </Link>
+            <Button 
+              variant="nav" 
+              className="text-sm font-medium"
+              onClick={signOut}
+            >
+              LOGOUT
+            </Button>
             <Link to="/add-car">
               <Button variant="premium" className="text-sm font-medium">LIST CAR</Button>
             </Link>
@@ -167,9 +195,17 @@ const Header = () => {
               <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button variant="nav" size="sm" className="w-full justify-start">ADMIN</Button>
               </Link>
-              <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="nav" size="sm" className="w-full justify-start">LOGIN</Button>
-              </Link>
+              <Button 
+                variant="nav" 
+                size="sm" 
+                className="w-full justify-start"
+                onClick={() => {
+                  signOut();
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                LOGOUT
+              </Button>
             </div>
             <Link to="/add-car" onClick={() => setIsMobileMenuOpen(false)}>
               <Button variant="premium" size="sm" className="w-full">LIST CAR</Button>

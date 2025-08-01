@@ -4,12 +4,16 @@ import CarCategories from "@/components/CarCategories";
 import CarBrands from "@/components/CarBrands";
 import FeaturedCars from "@/components/FeaturedCars";
 import Footer from "@/components/Footer";
+import RealTimeStats from "@/components/RealTimeStats";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <Hero />
+      <div className="container mx-auto px-6 py-8">
+        <RealTimeStats />
+      </div>
       <CarCategories />
       <CarBrands />
       <FeaturedCars />
