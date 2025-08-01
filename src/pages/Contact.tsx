@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import GoogleMap from "@/components/GoogleMap";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
@@ -201,6 +202,47 @@ const Contact = () => {
                 <p className="text-text-secondary">All major areas in Karachi</p>
                 <p className="text-sm text-text-secondary mt-2">Free delivery & pickup service</p>
               </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Google Maps Section */}
+        <div className="mb-16">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gold mb-4">Find Us</h2>
+            <p className="text-text-secondary">
+              Locate our offices and service areas across Karachi
+            </p>
+          </div>
+          <Card className="bg-dark-elevated border-border">
+            <CardContent className="p-6">
+              <GoogleMap
+                center={{ lat: 24.8607, lng: 67.0011 }}
+                zoom={12}
+                height="450px"
+                markers={[
+                  {
+                    position: { lat: 24.8607, lng: 67.0011 },
+                    title: "Kaar.Rentals Main Office",
+                    info: "Main office and car collection point in Karachi"
+                  },
+                  {
+                    position: { lat: 24.8858, lng: 67.0300 },
+                    title: "Gulshan Branch",
+                    info: "Secondary pickup location in Gulshan-e-Iqbal"
+                  },
+                  {
+                    position: { lat: 24.8238, lng: 67.0610 },
+                    title: "DHA Branch", 
+                    info: "Premium car collection point in Defence"
+                  },
+                  {
+                    position: { lat: 24.9074, lng: 67.0820 },
+                    title: "Clifton Branch",
+                    info: "Luxury vehicle showroom in Clifton"
+                  }
+                ]}
+              />
             </CardContent>
           </Card>
         </div>

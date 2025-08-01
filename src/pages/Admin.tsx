@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
 import Header from "@/components/Header";
+import AdminPasswordPrompt from "@/components/AdminPasswordPrompt";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -46,6 +47,23 @@ interface Ad {
 
 const Admin = () => {
   const { toast } = useToast();
+  const [hasAdminAccess, setHasAdminAccess] = useState(false);
+
+  useEffect(() => {
+    // Check if admin session exists and is valid (within 24 hours)
+    const adminSession = localStorage.getItem('admin_session');
+    if (adminSession) {
+      const sessionTime = parseInt(adminSession);
+      const twentyFourHours = 24 * 60 * 60 * 1000;
+      const currentTime = Date.now();
+      
+      if (currentTime - sessionTime < twentyFourHours) {
+        setHasAdminAccess(true);
+      } else {
+        localStorage.removeItem('admin_session');
+      }
+    }
+  }, []);
   
   const [cars, setCars] = useState<Car[]>([
     {
@@ -180,6 +198,11 @@ const Admin = () => {
       description: "Advertisement has been removed.",
     });
   };
+
+  // Show password prompt if admin access not granted
+  if (!hasAdminAccess) {
+    return <AdminPasswordPrompt onSuccess={() => setHasAdminAccess(true)} />;
+  }
 
   return (
     <div className="min-h-screen bg-background">

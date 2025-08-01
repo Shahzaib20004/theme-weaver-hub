@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Phone, MessageCircle, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
+import LanguageToggle from "./LanguageToggle";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 
 const Header = () => {
@@ -11,6 +13,7 @@ const Header = () => {
   const [isDealer, setIsDealer] = useState(false);
   const [dealerName, setDealerName] = useState("");
   const { user, signOut } = useAuth();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -43,9 +46,23 @@ const Header = () => {
                 <h1 className="text-xl font-bold text-gold tracking-wide">
                   Kaar.Rentals
                 </h1>
-                <p className="text-xs text-text-secondary italic">
-                  {isDealer && dealerName ? dealerName : "Reliable Rides Anytime"}
-                </p>
+                <div className="flex items-center gap-2">
+                  {isDealer && dealerName ? (
+                    <>
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      <p className="text-xs text-gold font-medium italic">
+                        {dealerName}
+                      </p>
+                      <div className="px-2 py-0.5 bg-gold/20 rounded-full">
+                        <span className="text-xs text-gold font-bold">DEALER</span>
+                      </div>
+                    </>
+                  ) : (
+                    <p className="text-xs text-text-secondary italic">
+                      {t('header.tagline')}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </Link>
@@ -53,25 +70,25 @@ const Header = () => {
           {/* Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
             <Link to="/cars">
-              <Button variant="nav" className="text-sm font-medium">ALL CARS</Button>
+              <Button variant="nav" className="text-sm font-medium">{t('header.allCars')}</Button>
             </Link>
             <Link to="/dealerships">
-              <Button variant="nav" className="text-sm font-medium">DEALERSHIPS</Button>
+              <Button variant="nav" className="text-sm font-medium">{t('header.dealerships')}</Button>
             </Link>
             <Link to="/brands">
-              <Button variant="nav" className="text-sm font-medium">CAR BRANDS</Button>
+              <Button variant="nav" className="text-sm font-medium">{t('header.brands')}</Button>
             </Link>
             <Link to="/daily-offers">
-              <Button variant="nav" className="text-sm font-medium">DAILY OFFERS</Button>
+              <Button variant="nav" className="text-sm font-medium">{t('header.dailyOffers')}</Button>
             </Link>
             <Link to="/services">
-              <Button variant="nav" className="text-sm font-medium">SERVICES</Button>
+              <Button variant="nav" className="text-sm font-medium">{t('header.services')}</Button>
             </Link>
             <Link to="/about">
-              <Button variant="nav" className="text-sm font-medium">ABOUT US</Button>
+              <Button variant="nav" className="text-sm font-medium">{t('header.about')}</Button>
             </Link>
             <Link to="/contact">
-              <Button variant="nav" className="text-sm font-medium">CONTACT US</Button>
+              <Button variant="nav" className="text-sm font-medium">{t('header.contact')}</Button>
             </Link>
             <Link to="/admin">
               <Button variant="nav" className="text-sm font-medium">ADMIN</Button>
@@ -81,7 +98,7 @@ const Header = () => {
               className="text-sm font-medium"
               onClick={signOut}
             >
-              LOGOUT
+              {t('header.logout')}
             </Button>
             <Link to="/add-car">
               <Button variant="premium" className="text-sm font-medium">LIST CAR</Button>
@@ -111,6 +128,9 @@ const Header = () => {
                 <span className="text-muted-foreground"> | 5858 reviews</span>
               </div>
             </div>
+
+            {/* Language Toggle */}
+            <LanguageToggle />
 
             {/* Mobile Menu Button */}
             <button

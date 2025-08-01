@@ -1,70 +1,73 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Car, Truck, Users, Zap } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const CarCategories = () => {
+  const { t } = useTranslation();
+  
   const categories = [
     {
       id: "sedan",
-      name: "Sedan",
+      name: t('categories.sedan.name'),
       icon: Car,
-      description: "Comfortable family cars",
+      description: t('categories.sedan.description'),
       count: "150+ cars"
     },
     {
       id: "suv",
-      name: "SUV",
+      name: t('categories.suv.name'),
       icon: Truck,
-      description: "Spacious and powerful",
+      description: t('categories.suv.description'),
       count: "80+ cars"
     },
     {
       id: "hatchback",
-      name: "Hatchback",
+      name: t('categories.hatchback.name'),
       icon: Car,
-      description: "Compact city cars",
+      description: t('categories.hatchback.description'),
       count: "120+ cars"
     },
     {
       id: "crossover",
-      name: "Crossover",
+      name: t('categories.crossover.name'),
       icon: Car,
-      description: "Versatile and efficient",
+      description: t('categories.crossover.description'),
       count: "65+ cars"
     },
     {
       id: "coupe",
-      name: "Coupe",
+      name: t('categories.coupe.name'),
       icon: Zap,
-      description: "Sporty two-door cars",
+      description: t('categories.coupe.description'),
       count: "35+ cars"
     },
     {
       id: "convertible",
-      name: "Convertible",
+      name: t('categories.convertible.name'),
       icon: Zap,
-      description: "Open-top luxury",
+      description: t('categories.convertible.description'),
       count: "15+ cars"
     },
     {
       id: "luxury",
-      name: "Luxury",
+      name: t('categories.luxury.name'),
       icon: Zap,
-      description: "Premium vehicles",
+      description: t('categories.luxury.description'),
       count: "25+ cars"
     },
     {
       id: "van",
-      name: "Van",
+      name: t('categories.van.name'),
       icon: Users,
-      description: "Group transportation",
+      description: t('categories.van.description'),
       count: "40+ cars"
     },
     {
       id: "pickup",
-      name: "Pickup",
+      name: t('categories.pickup.name'),
       icon: Truck,
-      description: "Heavy duty vehicles",
+      description: t('categories.pickup.description'),
       count: "30+ cars"
     }
   ];
@@ -74,10 +77,10 @@ const CarCategories = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-foreground mb-4">
-            Browse by Category
+            {t('categories.title')}
           </h2>
           <p className="text-text-secondary max-w-2xl mx-auto">
-            Find the perfect vehicle for your needs from our extensive collection
+            {t('categories.subtitle')}
           </p>
         </div>
         

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '@/integrations/supabase/client';
 
 interface Stats {
@@ -9,6 +10,7 @@ interface Stats {
 }
 
 const RealTimeStats = () => {
+  const { t } = useTranslation();
   const [stats, setStats] = useState<Stats>({
     totalCars: 0,
     totalBrands: 0,
@@ -73,19 +75,19 @@ const RealTimeStats = () => {
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
       <div className="bg-card p-4 rounded-lg border border-border text-center">
         <div className="text-2xl font-bold text-gold">{stats.totalCars}</div>
-        <div className="text-sm text-muted-foreground">Total Vehicles</div>
+        <div className="text-sm text-muted-foreground">{t('stats.totalVehicles')}</div>
       </div>
       <div className="bg-card p-4 rounded-lg border border-border text-center">
         <div className="text-2xl font-bold text-gold">{stats.totalBrands}</div>
-        <div className="text-sm text-muted-foreground">Car Brands</div>
+        <div className="text-sm text-muted-foreground">{t('stats.carBrands')}</div>
       </div>
       <div className="bg-card p-4 rounded-lg border border-border text-center">
         <div className="text-2xl font-bold text-gold">{stats.totalDealerships}</div>
-        <div className="text-sm text-muted-foreground">Dealerships</div>
+        <div className="text-sm text-muted-foreground">{t('stats.dealerships')}</div>
       </div>
       <div className="bg-card p-4 rounded-lg border border-border text-center">
         <div className="text-2xl font-bold text-gold">{stats.averageRating}</div>
-        <div className="text-sm text-muted-foreground">Average Rating</div>
+        <div className="text-sm text-muted-foreground">{t('stats.averageRating')}</div>
       </div>
     </div>
   );
