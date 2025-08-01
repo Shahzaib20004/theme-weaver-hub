@@ -1,10 +1,18 @@
 <svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
-  <g fill="#DC143C">
-    <!-- Mitsubishi three diamonds -->
-    <polygon points="30,15 25,25 35,25" fill="#DC143C"/>
-    <polygon points="20,30 30,40 15,40" fill="#DC143C"/>
-    <polygon points="40,30 45,40 30,40" fill="#DC143C"/>
+  <defs>
+    <linearGradient id="mitsubishiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#DC143C;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A0001C;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Mitsubishi's three diamond logo -->
+  <g transform="translate(8,8)">
+    <!-- Three diamonds arranged in triangle formation -->
+    <polygon points="22,8 28,18 16,18" fill="url(#mitsubishiGrad)" stroke="#8B0000" stroke-width="0.5"/>
+    <polygon points="12,25 18,35 6,35" fill="url(#mitsubishiGrad)" stroke="#8B0000" stroke-width="0.5"/>
+    <polygon points="32,25 38,35 26,35" fill="url(#mitsubishiGrad)" stroke="#8B0000" stroke-width="0.5"/>
+    
     <!-- MITSUBISHI text -->
-    <text x="55" y="35" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#DC143C">MITSUBISHI</text>
+    <text x="48" y="26" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="url(#mitsubishiGrad)" letter-spacing="0.5px">MITSUBISHI</text>
   </g>
 </svg>

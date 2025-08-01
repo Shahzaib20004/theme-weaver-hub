@@ -1,9 +1,23 @@
 <svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
-  <g fill="#002C5C">
-    <!-- Hyundai logo - stylized H in oval -->
-    <ellipse cx="30" cy="30" rx="20" ry="15" fill="none" stroke="#002C5C" stroke-width="3"/>
-    <path d="M15 30 Q30 20 45 30 Q30 40 15 30" fill="none" stroke="#002C5C" stroke-width="3"/>
+  <defs>
+    <linearGradient id="hyundaiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#003D82;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#002C5C;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Hyundai's slanted H in oval -->
+  <g transform="translate(8,8)">
+    <!-- Outer oval -->
+    <ellipse cx="22" cy="22" rx="18" ry="12" fill="none" stroke="url(#hyundaiGrad)" stroke-width="2"/>
+    
+    <!-- Stylized slanted H -->
+    <g fill="url(#hyundaiGrad)">
+      <path d="M10 16 L12 28 L14 16 Z"/>
+      <path d="M30 16 L32 28 L34 16 Z"/>
+      <path d="M12 20 L30 24 L30 22 L12 18 Z"/>
+    </g>
+    
     <!-- HYUNDAI text -->
-    <text x="55" y="35" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#002C5C">HYUNDAI</text>
+    <text x="48" y="26" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="url(#hyundaiGrad)" letter-spacing="1px">HYUNDAI</text>
   </g>
 </svg>
