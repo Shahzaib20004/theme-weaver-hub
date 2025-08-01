@@ -20,7 +20,7 @@ const Brands = () => {
     {
       id: "honda",
       name: "Honda", 
-      logo: "https://www.google.com/imgres?q=honda%20logo%20no%20background&imgurl=https%3A%2F%2Fp7.hiclipart.com%2Fpreview%2F978%2F480%2F5%2Fhonda-logo-car-toyota-honda-cr-v-honda.jpg&imgrefurl=https%3A%2F%2Fwww.hiclipart.com%2Ffree-transparent-background-png-clipart-yibzm&docid=SXVwDiCoeTJh4M&tbnid=-xBv2s8nBCJezM&vet=12ahUKEwjLyoSM1eqOAxXaSfEDHa4tLfMQM3oECCUQAA..i&w=800&h=500&hcb=2&ved=2ahUKEwjLyoSM1eqOAxXaSfEDHa4tLfMQM3oECCUQAA",
+      logo: "/api/placeholder/120/60",
       description: "Engineering excellence and innovation",
       carCount: 98,
       rating: 4.7,
