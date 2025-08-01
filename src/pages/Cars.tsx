@@ -1,21 +1,25 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Search, Filter, MapPin, User, Fuel, Calendar } from "lucide-react";
+import { Search, Filter, MapPin, User, Fuel, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const Cars = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
     brand: "",
     category: "",
     location: "",
     priceRange: ""
   });
+
+  // Pagination constants
+  const CARS_PER_PAGE = 20; // 2x10 layout
 
   const cars = [
     {
@@ -101,21 +105,77 @@ const Cars = () => {
       transmission: "Automatic",
       features: ["AC", "4WD", "Premium Sound"],
       availability: "Available"
-    }
+    },
+    // Additional cars for pagination demo
+    ...Array.from({ length: 50 }, (_, index) => ({
+      id: 13 + index,
+      name: `${['Toyota Corolla', 'Suzuki Alto', 'Honda Civic', 'Hyundai Elantra', 'KIA Picanto'][index % 5]} ${['XLi', 'GLi', 'VXR', 'RS', 'Turbo'][index % 5]}`,
+      brand: ['Toyota', 'Suzuki', 'Honda', 'Hyundai', 'KIA'][index % 5],
+      year: 2020 + (index % 4),
+      category: ['Sedan', 'Hatchback', 'SUV', 'Luxury'][index % 4],
+      location: ['Karachi', 'Lahore', 'Islamabad', 'Rawalpindi'][index % 4],
+      rate: (3000 + (index * 500)).toString(),
+      mileage: `${12 + (index % 8)} km/l`,
+      withDriver: index % 3 === 0,
+      transmission: index % 2 === 0 ? "Manual" : "Automatic",
+      features: [
+        ["AC", "Power Steering", "USB Charging"],
+        ["AC", "Power Windows", "Airbags"],
+        ["AC", "ABS", "Navigation"],
+        ["AC", "Cruise Control", "Parking Sensors"]
+      ][index % 4],
+      availability: index % 15 === 0 ? "Rented" : "Available"
+    }))
   ];
 
   const brands = ["Toyota", "Suzuki", "Honda", "Hyundai", "KIA"];
   const categories = ["Sedan", "SUV", "Hatchback", "Luxury"];
   const locations = ["Karachi", "Lahore", "Islamabad", "Rawalpindi"];
 
-  const filteredCars = cars.filter(car => {
-    return (
-      car.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (filters.brand === "" || car.brand === filters.brand) &&
-      (filters.category === "" || car.category === filters.category) &&
-      (filters.location === "" || car.location === filters.location)
-    );
-  });
+  // Filter cars based on search and filters
+  const filteredCars = useMemo(() => {
+    return cars.filter(car => {
+      return (
+        car.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (filters.brand === "" || car.brand === filters.brand) &&
+        (filters.category === "" || car.category === filters.category) &&
+        (filters.location === "" || car.location === filters.location)
+      );
+    });
+  }, [cars, searchTerm, filters]);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredCars.length / CARS_PER_PAGE);
+  const startIndex = (currentPage - 1) * CARS_PER_PAGE;
+  const endIndex = startIndex + CARS_PER_PAGE;
+  const currentCars = filteredCars.slice(startIndex, endIndex);
+
+  // Reset to page 1 when filters change
+  const handleFilterChange = (filterType: string, value: string) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: value === "all" ? "" : value
+    }));
+    setCurrentPage(1);
+  };
+
+  // Pagination handlers
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      goToPage(currentPage - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      goToPage(currentPage + 1);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -141,7 +201,7 @@ const Cars = () => {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Select onValueChange={(value) => setFilters({...filters, brand: value === "all" ? "" : value})}>
+            <Select onValueChange={(value) => handleFilterChange('brand', value)}>
               <SelectTrigger className="bg-dark-surface border-border text-foreground">
                 <SelectValue placeholder="Brand" />
               </SelectTrigger>
@@ -153,7 +213,7 @@ const Cars = () => {
               </SelectContent>
             </Select>
 
-            <Select onValueChange={(value) => setFilters({...filters, category: value === "all" ? "" : value})}>
+            <Select onValueChange={(value) => handleFilterChange('category', value)}>
               <SelectTrigger className="bg-dark-surface border-border text-foreground">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
@@ -165,7 +225,7 @@ const Cars = () => {
               </SelectContent>
             </Select>
 
-            <Select onValueChange={(value) => setFilters({...filters, location: value === "all" ? "" : value})}>
+            <Select onValueChange={(value) => handleFilterChange('location', value)}>
               <SelectTrigger className="bg-dark-surface border-border text-foreground">
                 <SelectValue placeholder="Location" />
               </SelectTrigger>
@@ -185,15 +245,25 @@ const Cars = () => {
         </div>
 
         {/* Results Count */}
-        <div className="mb-6">
+        <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <p className="text-text-secondary">
-            Showing {filteredCars.length} of {cars.length} cars
+            Showing {currentCars.length} of {filteredCars.length} cars 
+            {totalPages > 1 && (
+              <span className="ml-2 text-gold">
+                (Page {currentPage} of {totalPages})
+              </span>
+            )}
           </p>
+          
+          {/* Page Size Info */}
+          <div className="text-sm text-text-secondary">
+            {CARS_PER_PAGE} cars per page
+          </div>
         </div>
 
-        {/* Car Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCars.map((car) => (
+        {/* Car Grid - Mobile: 2 columns, Desktop: 4 columns for 2x10 layout */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {currentCars.map((car) => (
             <Card key={car.id} className="group hover:shadow-gold transition-all duration-300 bg-dark-surface border-border overflow-hidden">
               <div className="aspect-video bg-dark-elevated relative overflow-hidden">
                 <div className="w-full h-full bg-gradient-primary flex items-center justify-center">
@@ -277,6 +347,90 @@ const Cars = () => {
           ))}
         </div>
 
+        {/* Pagination */}
+        {filteredCars.length > 0 && totalPages > 1 && (
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 py-8">
+            {/* Previous Button */}
+            <Button
+              variant="outline"
+              onClick={goToPreviousPage}
+              disabled={currentPage === 1}
+              className="flex items-center gap-2 min-w-[120px]"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              Previous
+            </Button>
+
+            {/* Page Numbers */}
+            <div className="flex items-center gap-2">
+              {/* First page */}
+              {currentPage > 3 && (
+                <>
+                  <Button
+                    variant={1 === currentPage ? "default" : "ghost"}
+                    onClick={() => goToPage(1)}
+                    className="w-10 h-10 p-0"
+                  >
+                    1
+                  </Button>
+                  {currentPage > 4 && <span className="text-text-secondary">...</span>}
+                </>
+              )}
+
+              {/* Current page range */}
+              {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .filter(page => {
+                  if (totalPages <= 7) return true;
+                  if (currentPage <= 4) return page <= 5;
+                  if (currentPage >= totalPages - 3) return page > totalPages - 5;
+                  return page >= currentPage - 2 && page <= currentPage + 2;
+                })
+                .map(page => (
+                  <Button
+                    key={page}
+                    variant={page === currentPage ? "default" : "ghost"}
+                    onClick={() => goToPage(page)}
+                    className="w-10 h-10 p-0"
+                  >
+                    {page}
+                  </Button>
+                ))}
+
+              {/* Last page */}
+              {currentPage < totalPages - 2 && (
+                <>
+                  {currentPage < totalPages - 3 && <span className="text-text-secondary">...</span>}
+                  <Button
+                    variant={totalPages === currentPage ? "default" : "ghost"}
+                    onClick={() => goToPage(totalPages)}
+                    className="w-10 h-10 p-0"
+                  >
+                    {totalPages}
+                  </Button>
+                </>
+              )}
+            </div>
+
+            {/* Next Button */}
+            <Button
+              variant="outline"
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages}
+              className="flex items-center gap-2 min-w-[120px]"
+            >
+              Next
+              <ChevronRight className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
+
+        {/* Page Info */}
+        {filteredCars.length > 0 && (
+          <div className="text-center text-sm text-text-secondary mb-4">
+            Page {currentPage} of {totalPages} • {filteredCars.length} total cars
+          </div>
+        )}
+
         {filteredCars.length === 0 && (
           <div className="text-center py-12">
             <p className="text-text-secondary text-lg">No cars found matching your criteria</p>
@@ -286,6 +440,7 @@ const Cars = () => {
               onClick={() => {
                 setSearchTerm("");
                 setFilters({brand: "", category: "", location: "", priceRange: ""});
+                setCurrentPage(1);
               }}
             >
               Clear Filters

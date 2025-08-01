@@ -11,7 +11,9 @@ import { supabase } from "@/integrations/supabase/client";
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDealer, setIsDealer] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [dealerName, setDealerName] = useState("");
+  const [userRole, setUserRole] = useState<string>("");
   const { user, signOut } = useAuth();
   const { t } = useTranslation();
 
@@ -20,14 +22,22 @@ const Header = () => {
       if (user) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('is_dealer, dealer_name')
+          .select('is_dealer, dealer_name, role')
           .eq('user_id', user.id)
           .single();
         
         if (profile) {
           setIsDealer(profile.is_dealer || false);
           setDealerName(profile.dealer_name || "");
+          setUserRole(profile.role || "customer");
+          setIsAdmin(profile.role === "admin");
         }
+      } else {
+        // Reset states when user logs out
+        setIsDealer(false);
+        setDealerName("");
+        setUserRole("");
+        setIsAdmin(false);
       }
     };
 
@@ -90,9 +100,25 @@ const Header = () => {
             <Link to="/contact">
               <Button variant="nav" className="text-sm font-medium">{t('header.contact')}</Button>
             </Link>
-            <Link to="/admin">
-              <Button variant="nav" className="text-sm font-medium">ADMIN</Button>
-            </Link>
+            
+            {/* Admin-only navigation */}
+            {isAdmin && (
+              <Link to="/admin">
+                <Button variant="nav" className="text-sm font-medium text-red-400 hover:text-red-300">
+                  ADMIN
+                </Button>
+              </Link>
+            )}
+            
+            {/* Dealer-only navigation */}
+            {isDealer && (
+              <Link to="/dealer-dashboard">
+                <Button variant="nav" className="text-sm font-medium text-gold hover:text-gold/80">
+                  DEALER DASHBOARD
+                </Button>
+              </Link>
+            )}
+            
             <Button 
               variant="nav" 
               className="text-sm font-medium"
@@ -100,9 +126,15 @@ const Header = () => {
             >
               {t('header.logout')}
             </Button>
-            <Link to="/add-car">
-              <Button variant="premium" className="text-sm font-medium">LIST CAR</Button>
-            </Link>
+            
+            {/* Show List Car for dealers and customers */}
+            {(isDealer || userRole === "customer") && (
+              <Link to="/add-car">
+                <Button variant="premium" className="text-sm font-medium">
+                  {isDealer ? "ADD VEHICLE" : "LIST CAR"}
+                </Button>
+              </Link>
+            )}
           </nav>
 
           {/* Right Section */}
@@ -199,22 +231,41 @@ const Header = () => {
           <nav className="lg:hidden mt-4 pt-4 border-t border-border animate-in slide-in-from-top-2 duration-200">
             <div className="grid grid-cols-2 gap-3 mb-4">
               <Link to="/cars" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="nav" size="sm" className="w-full justify-start">ALL CARS</Button>
+                <Button variant="nav" size="sm" className="w-full justify-start">{t('header.allCars')}</Button>
               </Link>
-              <Button variant="nav" size="sm" className="w-full justify-start">OUR CARS</Button>
-              <Button variant="nav" size="sm" className="w-full justify-start">BRANDS</Button>
+              <Link to="/dealerships" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button variant="nav" size="sm" className="w-full justify-start">{t('header.dealerships')}</Button>
+              </Link>
+              <Link to="/brands" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button variant="nav" size="sm" className="w-full justify-start">{t('header.brands')}</Button>
+              </Link>
               <Link to="/daily-offers" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="nav" size="sm" className="w-full justify-start">OFFERS</Button>
+                <Button variant="nav" size="sm" className="w-full justify-start">{t('header.dailyOffers')}</Button>
               </Link>
-              <Button variant="nav" size="sm" className="w-full justify-start">PRICES</Button>
-              <Button variant="nav" size="sm" className="w-full justify-start">ABOUT</Button>
-              <Button variant="nav" size="sm" className="w-full justify-start">BLOG</Button>
+              <Link to="/services" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button variant="nav" size="sm" className="w-full justify-start">{t('header.services')}</Button>
+              </Link>
+              <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button variant="nav" size="sm" className="w-full justify-start">{t('header.about')}</Button>
+              </Link>
               <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="nav" size="sm" className="w-full justify-start">CONTACT</Button>
+                <Button variant="nav" size="sm" className="w-full justify-start">{t('header.contact')}</Button>
               </Link>
-              <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="nav" size="sm" className="w-full justify-start">ADMIN</Button>
-              </Link>
+              
+              {/* Admin-only mobile navigation */}
+              {isAdmin && (
+                <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button variant="nav" size="sm" className="w-full justify-start text-red-400">ADMIN</Button>
+                </Link>
+              )}
+              
+              {/* Dealer-only mobile navigation */}
+              {isDealer && (
+                <Link to="/dealer-dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button variant="nav" size="sm" className="w-full justify-start text-gold">DEALER DASHBOARD</Button>
+                </Link>
+              )}
+              
               <Button 
                 variant="nav" 
                 size="sm" 
@@ -224,12 +275,18 @@ const Header = () => {
                   setIsMobileMenuOpen(false);
                 }}
               >
-                LOGOUT
+                {t('header.logout')}
               </Button>
             </div>
-            <Link to="/add-car" onClick={() => setIsMobileMenuOpen(false)}>
-              <Button variant="premium" size="sm" className="w-full">LIST CAR</Button>
-            </Link>
+            
+            {/* Show List Car for dealers and customers */}
+            {(isDealer || userRole === "customer") && (
+              <Link to="/add-car" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button variant="premium" size="sm" className="w-full">
+                  {isDealer ? "ADD VEHICLE" : "LIST CAR"}
+                </Button>
+              </Link>
+            )}
             
             {/* Mobile Social Icons */}
             <div className="flex justify-center gap-4 mt-4 pt-4 border-t border-border">
