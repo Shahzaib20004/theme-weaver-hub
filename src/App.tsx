@@ -14,6 +14,7 @@ import AddCar from "./pages/AddCar";
 import Admin from "./pages/Admin";
 import DealerDashboard from "./pages/DealerDashboard";
 import DealerShowroom from "./pages/DealerShowroom";
+import CarDetails from "./pages/CarDetails";
 import Contact from "./pages/Contact";
 import DailyOffers from "./pages/DailyOffers";
 import Dealerships from "./pages/Dealerships";
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/admin" element={<ProtectedRoute requireAdmin={true}><Admin /></ProtectedRoute>} />
             <Route path="/dealer-dashboard" element={<ProtectedRoute><DealerDashboard /></ProtectedRoute>} />
             <Route path="/dealer-showroom/:dealerId" element={<ProtectedRoute><DealerShowroom /></ProtectedRoute>} />
+            <Route path="/car-details/:carId" element={<ProtectedRoute><CarDetails /></ProtectedRoute>} />
             <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
             <Route path="/daily-offers" element={<ProtectedRoute><DailyOffers /></ProtectedRoute>} />
             <Route path="/dealerships" element={<ProtectedRoute><Dealerships /></ProtectedRoute>} />
