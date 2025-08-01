@@ -44,7 +44,7 @@ const CarBrands = () => {
       counts[car.brand] = (counts[car.brand] || 0) + 1;
     });
     setBrandCounts(counts);
-  }, []);
+  }, [mockCars]);
 
   const brands: BrandData[] = [
     {

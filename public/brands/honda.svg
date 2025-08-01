@@ -1,0 +1,10 @@
+<svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#CC0000">
+    <!-- Honda H logo -->
+    <rect x="15" y="15" width="8" height="30" fill="#CC0000"/>
+    <rect x="37" y="15" width="8" height="30" fill="#CC0000"/>
+    <rect x="15" y="27" width="30" height="6" fill="#CC0000"/>
+    <!-- HONDA text -->
+    <text x="55" y="35" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#CC0000">HONDA</text>
+  </g>
+</svg>
