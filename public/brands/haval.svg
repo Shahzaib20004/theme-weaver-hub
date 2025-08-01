@@ -1,0 +1,10 @@
+<svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#FF6B35">
+    <!-- Haval H logo -->
+    <rect x="15" y="15" width="6" height="30" fill="#FF6B35"/>
+    <rect x="34" y="15" width="6" height="30" fill="#FF6B35"/>
+    <rect x="15" y="27" width="25" height="6" fill="#FF6B35"/>
+    <!-- HAVAL text -->
+    <text x="50" y="35" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FF6B35">HAVAL</text>
+  </g>
+</svg>

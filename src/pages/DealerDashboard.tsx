@@ -55,7 +55,15 @@ const DealerDashboard = () => {
     profileImage: ""
   });
   const [deals, setDeals] = useState<Deal[]>([]);
-  const [cars, setCars] = useState<any[]>([]);
+  const [cars, setCars] = useState<Array<{
+    id: string;
+    name: string;
+    brand: string;
+    year: number;
+    price: number;
+    image: string;
+    status: string;
+  }>>([]);
   const [stats, setStats] = useState<DealerStats>({
     totalCars: 0,
     activeDeals: 0,

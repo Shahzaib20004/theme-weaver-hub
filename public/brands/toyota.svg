@@ -1,0 +1,19 @@
+<svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="toyotaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E50000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B30000;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Toyota's actual logo design - three interlocking ovals -->
+  <g transform="translate(10,10)">
+    <!-- Outer large oval -->
+    <ellipse cx="30" cy="20" rx="25" ry="16" fill="none" stroke="url(#toyotaGrad)" stroke-width="2.5"/>
+    <!-- Inner left oval -->
+    <ellipse cx="20" cy="20" rx="12" ry="8" fill="none" stroke="url(#toyotaGrad)" stroke-width="2.5"/>
+    <!-- Inner right oval -->
+    <ellipse cx="40" cy="20" rx="12" ry="8" fill="none" stroke="url(#toyotaGrad)" stroke-width="2.5"/>
+    <!-- TOYOTA text -->
+    <text x="65" y="25" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="url(#toyotaGrad)" letter-spacing="1px">TOYOTA</text>
+  </g>
+</svg>

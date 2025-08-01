@@ -72,7 +72,7 @@ const AdminAdsManager = () => {
     return matchesSearch && matchesFilter;
   });
 
-  const handleAddAd = (newAd: any) => {
+  const handleAddAd = (newAd: Omit<Ad, 'id' | 'position'>) => {
     const ad: Ad = {
       ...newAd,
       id: Date.now().toString(),

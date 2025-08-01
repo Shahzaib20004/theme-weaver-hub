@@ -10,7 +10,7 @@ const Brands = () => {
     {
       id: "toyota",
       name: "Toyota",
-      logo: "/api/placeholder/120/60",
+      logo: "/brands/toyota.png",
       description: "World's most reliable automotive brand",
       carCount: 145,
       rating: 4.8,
@@ -20,7 +20,7 @@ const Brands = () => {
     {
       id: "honda",
       name: "Honda", 
-      logo: "/api/placeholder/120/60",
+      logo: "/brands/honda.png",
       description: "Engineering excellence and innovation",
       carCount: 98,
       rating: 4.7,
@@ -30,7 +30,7 @@ const Brands = () => {
     {
       id: "suzuki",
       name: "Suzuki",
-      logo: "/api/placeholder/120/60", 
+      logo: "/brands/suzuki.png", 
       description: "Compact cars with great fuel efficiency",
       carCount: 112,
       rating: 4.6,
@@ -40,7 +40,7 @@ const Brands = () => {
     {
       id: "hyundai",
       name: "Hyundai",
-      logo: "/api/placeholder/120/60",
+      logo: "/brands/hyundai.png",
       description: "Modern design with advanced technology",
       carCount: 67,
       rating: 4.5,
@@ -50,7 +50,7 @@ const Brands = () => {
     {
       id: "kia",
       name: "KIA",
-      logo: "/api/placeholder/120/60",
+      logo: "/brands/kia.png",
       description: "Bold design and innovative features",
       carCount: 45,
       rating: 4.4,
@@ -60,7 +60,7 @@ const Brands = () => {
     {
       id: "nissan",
       name: "Nissan",
-      logo: "/api/placeholder/120/60",
+      logo: "/brands/nissan.png",
       description: "Innovation that excites",
       carCount: 52,
       rating: 4.3,
@@ -70,7 +70,7 @@ const Brands = () => {
     {
       id: "mercedes",
       name: "Mercedes-Benz",
-      logo: "/api/placeholder/120/60",
+      logo: "/brands/mercedes.png",
       description: "Luxury and performance combined",
       carCount: 23,
       rating: 4.9,
@@ -80,7 +80,7 @@ const Brands = () => {
     {
       id: "bmw",
       name: "BMW",
-      logo: "/api/placeholder/120/60",
+      logo: "/brands/bmw.png",
       description: "The ultimate driving machine",
       carCount: 18,
       rating: 4.8,
@@ -90,7 +90,7 @@ const Brands = () => {
     {
       id: "audi",
       name: "Audi",
-      logo: "/api/placeholder/120/60",
+      logo: "/brands/audi.png",
       description: "Vorsprung durch Technik",
       carCount: 15,
       rating: 4.7,

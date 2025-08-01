@@ -1,0 +1,19 @@
+<svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="hondaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E60012;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B30000;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Honda's actual logo design -->
+  <g transform="translate(5,8)">
+    <!-- Honda H in a rounded rectangle -->
+    <rect x="10" y="8" width="35" height="28" rx="4" ry="4" fill="none" stroke="url(#hondaGrad)" stroke-width="2"/>
+    <!-- H letter -->
+    <rect x="15" y="12" width="4" height="20" fill="url(#hondaGrad)"/>
+    <rect x="31" y="12" width="4" height="20" fill="url(#hondaGrad)"/>
+    <rect x="15" y="20" width="20" height="4" fill="url(#hondaGrad)"/>
+    <!-- HONDA text -->
+    <text x="55" y="26" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="url(#hondaGrad)" letter-spacing="1px">HONDA</text>
+  </g>
+</svg>

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 interface BrandData {
   id: string;
   name: string;
-  logo: React.ReactNode;
+  logo: string;
   count: number;
   color: string;
 }
@@ -44,7 +44,7 @@ const CarBrands = () => {
       counts[car.brand] = (counts[car.brand] || 0) + 1;
     });
     setBrandCounts(counts);
-  }, []);
+  }, [mockCars]);
 
   const brands: BrandData[] = [
     {
@@ -52,148 +52,84 @@ const CarBrands = () => {
       name: "Toyota",
       color: "#D4101E",
       count: brandCounts["Toyota"] || 0,
-      logo: (
-        <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
-          <svg viewBox="0 0 100 100" className="w-12 h-12">
-            <circle cx="35" cy="50" r="18" fill="none" stroke="#D4101E" strokeWidth="4"/>
-            <circle cx="65" cy="35" r="18" fill="none" stroke="#D4101E" strokeWidth="4"/>
-            <circle cx="65" cy="65" r="18" fill="none" stroke="#D4101E" strokeWidth="4"/>
-          </svg>
-        </div>
-      )
+      logo: "/brands/toyota.png"
     },
     {
       id: "suzuki",
       name: "Suzuki",
       color: "#E60012",
       count: brandCounts["Suzuki"] || 0,
-      logo: (
-        <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
-          <span className="text-2xl font-bold text-red-600" style={{ color: "#E60012" }}>S</span>
-        </div>
-      )
+      logo: "/brands/suzuki.png"
     },
     {
       id: "honda",
       name: "Honda",
       color: "#CC0000",
       count: brandCounts["Honda"] || 0,
-      logo: (
-        <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
-          <svg viewBox="0 0 100 100" className="w-12 h-12">
-            <path d="M15 20 L15 80 L25 80 L25 55 L75 55 L75 80 L85 80 L85 20 L75 20 L75 45 L25 45 L25 20 Z" fill="#CC0000"/>
-          </svg>
-        </div>
-      )
+      logo: "/brands/honda.png"
     },
     {
       id: "hyundai",
       name: "Hyundai",
       color: "#002C5C",
       count: brandCounts["Hyundai"] || 0,
-      logo: (
-        <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
-          <svg viewBox="0 0 100 100" className="w-12 h-12">
-            <ellipse cx="50" cy="50" rx="35" ry="20" fill="none" stroke="#002C5C" strokeWidth="6"/>
-            <path d="M20 50 Q50 30 80 50" fill="none" stroke="#002C5C" strokeWidth="4"/>
-          </svg>
-        </div>
-      )
+      logo: "/brands/hyundai.png"
     },
     {
       id: "kia",
       name: "KIA",
       color: "#05141F",
       count: brandCounts["KIA"] || 0,
-      logo: (
-        <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
-          <span className="text-xl font-bold" style={{ color: "#05141F" }}>KIA</span>
-        </div>
-      )
+      logo: "/brands/kia.png"
     },
     {
       id: "mitsubishi",
       name: "Mitsubishi",
       color: "#DC143C",
       count: brandCounts["Mitsubishi"] || 0,
-      logo: (
-        <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
-          <svg viewBox="0 0 100 100" className="w-12 h-12">
-            <polygon points="50,15 30,45 70,45" fill="#DC143C"/>
-            <polygon points="30,55 50,85 70,55" fill="#DC143C"/>
-            <polygon points="20,45 50,55 20,65" fill="#DC143C"/>
-            <polygon points="80,45 50,55 80,65" fill="#DC143C"/>
-          </svg>
-        </div>
-      )
+      logo: "/brands/mitsubishi.png"
     },
     {
       id: "mg",
       name: "MG",
       color: "#8B0000",
       count: brandCounts["MG"] || 0,
-      logo: (
-        <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
-          <span className="text-xl font-bold" style={{ color: "#8B0000" }}>MG</span>
-        </div>
-      )
+      logo: "/brands/mg.png"
     },
     {
       id: "changan",
       name: "Changan",
       color: "#1E3A8A",
       count: brandCounts["Changan"] || 0,
-      logo: (
-        <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
-          <svg viewBox="0 0 100 100" className="w-12 h-12">
-            <path d="M50 20 L30 50 L50 80 L70 50 Z" fill="#1E3A8A"/>
-          </svg>
-        </div>
-      )
+      logo: "/brands/changan.png"
     },
     {
       id: "haval",
       name: "Haval",
       color: "#FF6B35",
       count: brandCounts["Haval"] || 0,
-      logo: (
-        <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
-          <span className="text-lg font-bold" style={{ color: "#FF6B35" }}>H</span>
-        </div>
-      )
+      logo: "/brands/haval.png"
     },
     {
       id: "proton",
       name: "Proton",
       color: "#0066CC",
       count: brandCounts["Proton"] || 0,
-      logo: (
-        <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
-          <span className="text-sm font-bold" style={{ color: "#0066CC" }}>PROTON</span>
-        </div>
-      )
+      logo: "/brands/proton.png"
     },
     {
       id: "daihatsu",
       name: "Daihatsu",
       color: "#E31E24",
       count: brandCounts["Daihatsu"] || 0,
-      logo: (
-        <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
-          <span className="text-lg font-bold" style={{ color: "#E31E24" }}>D</span>
-        </div>
-      )
+      logo: "/brands/daihatsu.png"
     },
     {
       id: "isuzu",
       name: "Isuzu",
       color: "#FF4500",
       count: brandCounts["Isuzu"] || 0,
-      logo: (
-        <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full mb-3 group-hover:scale-110 transition-transform duration-300">
-          <span className="text-sm font-bold" style={{ color: "#FF4500" }}>ISUZU</span>
-        </div>
-      )
+      logo: "/brands/isuzu.png"
     }
   ];
 
@@ -216,7 +152,13 @@ const CarBrands = () => {
               className="group hover:shadow-gold transition-all duration-300 cursor-pointer bg-dark-elevated border-border hover:border-gold/50"
             >
               <CardContent className="p-6 text-center">
-                {brand.logo}
+                <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full mb-3 group-hover:scale-110 transition-transform duration-300 mx-auto">
+                  <img 
+                    src={brand.logo} 
+                    alt={`${brand.name} logo`}
+                    className="w-12 h-12 object-contain"
+                  />
+                </div>
                 <h3 className="font-semibold text-foreground mb-2 group-hover:text-gold transition-colors">
                   {brand.name}
                 </h3>
