@@ -1,0 +1,106 @@
+{
+  "header": {
+    "allCars": "ALL CARS",
+    "dealerships": "DEALERSHIPS",
+    "dailyOffers": "DAILY OFFERS",
+    "brands": "BRANDS",
+    "services": "SERVICES",
+    "about": "ABOUT",
+    "contact": "CONTACT",
+    "login": "LOGIN",
+    "signup": "SIGN UP",
+    "logout": "LOGOUT",
+    "tagline": "Reliable Rides Anytime"
+  },
+  "hero": {
+    "title": "Your Journey, Your Choice",
+    "subtitle": "Premium car rentals with transparent pricing and exceptional service across Pakistan",
+    "searchPlaceholder": "Where do you want to go?",
+    "searchButton": "Find Cars"
+  },
+  "categories": {
+    "title": "Browse by Category",
+    "subtitle": "Find the perfect vehicle for your needs from our extensive collection",
+    "sedan": {
+      "name": "Sedan",
+      "description": "Comfortable family cars"
+    },
+    "suv": {
+      "name": "SUV", 
+      "description": "Spacious and powerful"
+    },
+    "hatchback": {
+      "name": "Hatchback",
+      "description": "Compact city cars"
+    },
+    "crossover": {
+      "name": "Crossover",
+      "description": "Versatile and efficient"
+    },
+    "coupe": {
+      "name": "Coupe",
+      "description": "Sporty two-door cars"
+    },
+    "convertible": {
+      "name": "Convertible",
+      "description": "Open-top luxury"
+    },
+    "luxury": {
+      "name": "Luxury",
+      "description": "Premium vehicles"
+    },
+    "van": {
+      "name": "Van",
+      "description": "Group transportation"
+    },
+    "pickup": {
+      "name": "Pickup",
+      "description": "Heavy duty vehicles"
+    }
+  },
+  "stats": {
+    "totalVehicles": "Total Vehicles",
+    "carBrands": "Car Brands",
+    "dealerships": "Dealerships",
+    "averageRating": "Average Rating"
+  },
+  "common": {
+    "perDay": "/day",
+    "withDriver": "With Driver",
+    "bookNow": "Book Now",
+    "viewDetails": "View Details",
+    "loading": "Loading...",
+    "search": "Search",
+    "filter": "Filter",
+    "apply": "Apply",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "submit": "Submit",
+    "featured": "Featured",
+    "available": "Available",
+    "rented": "Rented",
+    "maintenance": "Under Maintenance"
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "cars": "Cars",
+    "advertisements": "Advertisements",
+    "addCar": "Add Car",
+    "addAd": "Add Advertisement",
+    "manageListings": "Manage Listings",
+    "passwordPrompt": "Enter admin password to continue"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "createAccount": "Create Account",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?"
+  }
+}

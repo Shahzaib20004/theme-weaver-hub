@@ -26,7 +26,8 @@ const AddCar = () => {
     seats: "",
     description: "",
     withDriver: false,
-    features: [] as string[]
+    features: [] as string[],
+    package: "basic" as "basic" | "featured" | "premium"
   });
 
   const [images, setImages] = useState<string[]>([]);
@@ -251,6 +252,93 @@ const AddCar = () => {
                       />
                     </Badge>
                   ))}
+                </div>
+              </div>
+
+              {/* Listing Package */}
+              <div className="space-y-4">
+                <Label className="text-foreground">Listing Package</Label>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Basic Package */}
+                  <Card 
+                    className={`cursor-pointer transition-all duration-300 ${
+                      formData.package === 'basic' 
+                        ? 'border-gold shadow-gold bg-gold/5' 
+                        : 'border-border hover:border-gold/50'
+                    }`}
+                    onClick={() => setFormData({...formData, package: 'basic'})}
+                  >
+                    <CardContent className="p-4 text-center">
+                      <div className="w-12 h-12 bg-gray-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span className="text-white font-bold">B</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2">Basic</h3>
+                      <p className="text-sm text-text-secondary mb-3">Standard listing</p>
+                      <p className="text-lg font-bold text-foreground">Free</p>
+                      <ul className="text-xs text-text-secondary mt-2 space-y-1">
+                        <li>• Standard search placement</li>
+                        <li>• Basic visibility</li>
+                        <li>• 30 days listing</li>
+                      </ul>
+                    </CardContent>
+                  </Card>
+
+                  {/* Featured Package */}
+                  <Card 
+                    className={`cursor-pointer transition-all duration-300 ${
+                      formData.package === 'featured' 
+                        ? 'border-gold shadow-gold bg-gold/5' 
+                        : 'border-border hover:border-gold/50'
+                    }`}
+                    onClick={() => setFormData({...formData, package: 'featured'})}
+                  >
+                    <CardContent className="p-4 text-center">
+                      <div className="w-12 h-12 bg-gold rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span className="text-primary-foreground font-bold">F</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2">Featured</h3>
+                      <p className="text-sm text-text-secondary mb-3">Enhanced visibility</p>
+                      <p className="text-lg font-bold text-gold">Rs 2,000</p>
+                      <ul className="text-xs text-text-secondary mt-2 space-y-1">
+                        <li>• Featured badge</li>
+                        <li>• Higher search ranking</li>
+                        <li>• 45 days listing</li>
+                        <li>• Priority support</li>
+                      </ul>
+                    </CardContent>
+                  </Card>
+
+                  {/* Premium Package */}
+                  <Card 
+                    className={`cursor-pointer transition-all duration-300 ${
+                      formData.package === 'premium' 
+                        ? 'border-gold shadow-gold bg-gold/5' 
+                        : 'border-border hover:border-gold/50'
+                    }`}
+                    onClick={() => setFormData({...formData, package: 'premium'})}
+                  >
+                    <CardContent className="p-4 text-center">
+                      <div className="w-12 h-12 bg-gradient-gold rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span className="text-primary-foreground font-bold">P</span>
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2">Premium</h3>
+                      <p className="text-sm text-text-secondary mb-3">Maximum exposure</p>
+                      <p className="text-lg font-bold text-gold">Rs 5,000</p>
+                      <ul className="text-xs text-text-secondary mt-2 space-y-1">
+                        <li>• Top search placement</li>
+                        <li>• Homepage featured</li>
+                        <li>• 60 days listing</li>
+                        <li>• Dedicated support</li>
+                        <li>• Social media promotion</li>
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </div>
+                
+                <div className="p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+                  <p className="text-sm text-blue-400">
+                    💡 Featured and Premium packages include better visibility and more inquiries for your listing.
+                  </p>
                 </div>
               </div>
 
