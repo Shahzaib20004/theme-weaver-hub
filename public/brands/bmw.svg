@@ -1,0 +1,12 @@
+<svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <!-- BMW roundel -->
+    <circle cx="30" cy="30" r="18" fill="none" stroke="#000" stroke-width="3"/>
+    <path d="M12 30 A18 18 0 0 1 30 12 L30 30 Z" fill="#0066B2"/>
+    <path d="M30 12 A18 18 0 0 1 48 30 L30 30 Z" fill="#FFF"/>
+    <path d="M48 30 A18 18 0 0 1 30 48 L30 30 Z" fill="#0066B2"/>
+    <path d="M30 48 A18 18 0 0 1 12 30 L30 30 Z" fill="#FFF"/>
+    <!-- BMW text -->
+    <text x="55" y="35" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#000">BMW</text>
+  </g>
+</svg>

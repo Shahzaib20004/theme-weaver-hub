@@ -1,0 +1,10 @@
+<svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#DC143C">
+    <!-- Mitsubishi three diamonds -->
+    <polygon points="30,15 25,25 35,25" fill="#DC143C"/>
+    <polygon points="20,30 30,40 15,40" fill="#DC143C"/>
+    <polygon points="40,30 45,40 30,40" fill="#DC143C"/>
+    <!-- MITSUBISHI text -->
+    <text x="55" y="35" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#DC143C">MITSUBISHI</text>
+  </g>
+</svg>

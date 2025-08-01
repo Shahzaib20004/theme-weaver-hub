@@ -1,0 +1,10 @@
+<svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#00ADEF">
+    <!-- Mercedes star logo -->
+    <circle cx="30" cy="30" r="18" fill="none" stroke="#00ADEF" stroke-width="3"/>
+    <path d="M30 15 L25 35 L35 25 L25 25 L35 35 Z" fill="#00ADEF"/>
+    <!-- Mercedes-Benz text -->
+    <text x="55" y="28" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#00ADEF">Mercedes</text>
+    <text x="55" y="40" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#00ADEF">Benz</text>
+  </g>
+</svg>

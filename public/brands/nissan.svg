@@ -1,0 +1,9 @@
+<svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#C3002F">
+    <!-- Nissan circle logo -->
+    <circle cx="30" cy="30" r="18" fill="none" stroke="#C3002F" stroke-width="3"/>
+    <rect x="24" y="20" width="12" height="20" fill="#C3002F"/>
+    <!-- NISSAN text -->
+    <text x="55" y="35" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#C3002F">NISSAN</text>
+  </g>
+</svg>
