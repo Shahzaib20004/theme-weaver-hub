@@ -2,8 +2,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
+import { RealtimeProvider } from "@/contexts/RealtimeContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import "@/i18n/config";
 import Index from "./pages/Index";
@@ -25,39 +27,62 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+// Create a client with better configuration
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+      retry: (failureCount, error: any) => {
+        // Don't retry on 4xx errors
+        if (error?.status >= 400 && error?.status < 500) {
+          return false
+        }
+        return failureCount < 3
+      },
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
+    },
+    mutations: {
+      retry: false,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
-            <Route path="/cars" element={<ProtectedRoute><Cars /></ProtectedRoute>} />
-            <Route path="/add-car" element={<ProtectedRoute><AddCar /></ProtectedRoute>} />
-            <Route path="/admin" element={<ProtectedRoute requireAdmin={true}><Admin /></ProtectedRoute>} />
-            <Route path="/dealer-dashboard" element={<ProtectedRoute><DealerDashboard /></ProtectedRoute>} />
-            <Route path="/dealer-showroom/:dealerId" element={<ProtectedRoute><DealerShowroom /></ProtectedRoute>} />
-            <Route path="/car-details/:carId" element={<ProtectedRoute><CarDetails /></ProtectedRoute>} />
-            <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
-            <Route path="/daily-offers" element={<ProtectedRoute><DailyOffers /></ProtectedRoute>} />
-            <Route path="/dealerships" element={<ProtectedRoute><Dealerships /></ProtectedRoute>} />
-            <Route path="/services" element={<ProtectedRoute><Services /></ProtectedRoute>} />
-            <Route path="/brands" element={<ProtectedRoute><Brands /></ProtectedRoute>} />
-            <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <RealtimeProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+              <Route path="/cars" element={<ProtectedRoute><Cars /></ProtectedRoute>} />
+              <Route path="/add-car" element={<ProtectedRoute><AddCar /></ProtectedRoute>} />
+              <Route path="/admin" element={<ProtectedRoute requireAdmin={true}><Admin /></ProtectedRoute>} />
+              <Route path="/dealer-dashboard" element={<ProtectedRoute><DealerDashboard /></ProtectedRoute>} />
+              <Route path="/dealer-showroom/:dealerId" element={<ProtectedRoute><DealerShowroom /></ProtectedRoute>} />
+              <Route path="/car-details/:carId" element={<ProtectedRoute><CarDetails /></ProtectedRoute>} />
+              <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+              <Route path="/daily-offers" element={<ProtectedRoute><DailyOffers /></ProtectedRoute>} />
+              <Route path="/dealerships" element={<ProtectedRoute><Dealerships /></ProtectedRoute>} />
+              <Route path="/services" element={<ProtectedRoute><Services /></ProtectedRoute>} />
+              <Route path="/brands" element={<ProtectedRoute><Brands /></ProtectedRoute>} />
+              <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </RealtimeProvider>
     </AuthProvider>
+    <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>
 );
 
