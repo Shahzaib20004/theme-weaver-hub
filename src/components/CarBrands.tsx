@@ -108,28 +108,28 @@ const CarBrands = () => {
       name: "Haval",
       color: "#FF6B35",
       count: brandCounts["Haval"] || 0,
-      logo: "/brands/haval.svg"
+      logo: "/brands/haval.png"
     },
     {
       id: "proton",
       name: "Proton",
       color: "#0066CC",
       count: brandCounts["Proton"] || 0,
-      logo: "/brands/proton.svg"
+      logo: "/brands/proton.png"
     },
     {
       id: "daihatsu",
       name: "Daihatsu",
       color: "#E31E24",
       count: brandCounts["Daihatsu"] || 0,
-      logo: "/brands/daihatsu.svg"
+      logo: "/brands/daihatsu.png"
     },
     {
       id: "isuzu",
       name: "Isuzu",
       color: "#FF4500",
       count: brandCounts["Isuzu"] || 0,
-      logo: "/brands/isuzu.svg"
+      logo: "/brands/isuzu.png"
     }
   ];
 
