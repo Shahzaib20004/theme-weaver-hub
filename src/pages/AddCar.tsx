@@ -120,6 +120,28 @@ const AddCar = () => {
       if (!dbTest.success) {
         throw new Error('Database connection failed. Please contact support.');
       }
+
+      // Get brand_id from brand name
+      let brandId = null;
+      if (formData.brand) {
+        const { data: brandData } = await supabase
+          .from('car_brands')
+          .select('id')
+          .eq('name', formData.brand)
+          .single();
+        brandId = brandData?.id;
+      }
+
+      // Get category_id from category name
+      let categoryId = null;
+      if (formData.category) {
+        const { data: categoryData } = await supabase
+          .from('car_categories')
+          .select('id')
+          .eq('name', formData.category)
+          .single();
+        categoryId = categoryData?.id;
+      }
       const listingData = {
         ...formData,
         images,
@@ -133,34 +155,28 @@ const AddCar = () => {
         expiryDate: new Date(Date.now() + packageDetails[formData.package].days * 24 * 60 * 60 * 1000).toISOString()
       };
 
-      // Insert into Supabase
+      // Insert into Supabase (matching your actual database schema)
       const { error } = await supabase
         .from('cars')
         .insert([{
           title: formData.carName,
-          brand: formData.brand,
+          description: formData.description,
           model: formData.model,
           year: parseInt(formData.year),
-          category: formData.category,
-          daily_rate: parseFloat(formData.dailyRate),
-          mileage: formData.mileage,
+          price_per_day: parseFloat(formData.dailyRate),
+          mileage: parseInt(formData.mileage) || null,
           transmission: formData.transmission,
           fuel_type: formData.fuelType,
-          seats: parseInt(formData.seats),
-          description: formData.description,
-          features: formData.features,
-          images: images,
-          location: location,
-          condition: formData.condition,
           color: formData.color,
-          engine_capacity: formData.engineCapacity,
-          registration_city: formData.registrationCity,
-          with_driver: formData.withDriver,
-          package_type: formData.package,
-          package_price: packageDetails[formData.package].price,
-          status: 'pending_approval',
+          images: images,
+          location: location?.address || null,
+          latitude: location?.latitude || null,
+          longitude: location?.longitude || null,
+          is_featured: formData.package !== 'basic',
+          is_available: true,
           user_id: user?.id,
-          payment_data: paymentData || null
+          brand_id: brandId,
+          category_id: categoryId
         }]);
 
       if (error) throw error;
