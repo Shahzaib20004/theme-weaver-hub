@@ -53,21 +53,53 @@ const LocationPicker = ({ location, onLocationChange }: LocationPickerProps) => 
         const { latitude, longitude } = position.coords;
         
         try {
-          // You can implement reverse geocoding here using Google Maps Geocoding API
-          // For now, using mock data
-          const mockAddress = `Street ${Math.floor(Math.random() * 100)}, Sector ${Math.floor(Math.random() * 20)}`;
-          const cities = ["Karachi", "Lahore", "Islamabad", "Rawalpindi", "Faisalabad"];
-          const randomCity = cities[Math.floor(Math.random() * cities.length)];
-          
-          const locationData: LocationData = {
-            latitude,
-            longitude,
-            address: mockAddress,
-            city: randomCity,
-            area: `Area ${Math.floor(Math.random() * 50)}`
-          };
+          // Use Google Maps Geocoding API for reverse geocoding
+          if (GOOGLE_MAPS_API_KEY) {
+            const response = await fetch(
+              `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_API_KEY}`
+            );
+            const data = await response.json();
+            
+            if (data.status === 'OK' && data.results.length > 0) {
+              const result = data.results[0];
+              const addressComponents = result.address_components;
+              
+              // Extract address components
+              const streetNumber = addressComponents.find(c => c.types.includes('street_number'))?.long_name || '';
+              const route = addressComponents.find(c => c.types.includes('route'))?.long_name || '';
+              const sublocality = addressComponents.find(c => c.types.includes('sublocality_level_1'))?.long_name || '';
+              const locality = addressComponents.find(c => c.types.includes('locality'))?.long_name || '';
+              const city = addressComponents.find(c => c.types.includes('administrative_area_level_2'))?.long_name || 
+                          addressComponents.find(c => c.types.includes('locality'))?.long_name || 'Unknown City';
+              
+              // Construct full address
+              const addressParts = [streetNumber, route].filter(Boolean);
+              const fullAddress = addressParts.length > 0 ? addressParts.join(' ') : result.formatted_address;
+              
+              const locationData: LocationData = {
+                latitude,
+                longitude,
+                address: fullAddress,
+                city: city,
+                area: sublocality || locality || 'Unknown Area'
+              };
 
-          onLocationChange(locationData);
+              onLocationChange(locationData);
+            } else {
+              throw new Error('Geocoding failed');
+            }
+          } else {
+            // Fallback when API key is not available
+            const locationData: LocationData = {
+              latitude,
+              longitude,
+              address: `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`,
+              city: 'Unknown City',
+              area: 'Unknown Area'
+            };
+
+            onLocationChange(locationData);
+          }
           
           toast({
             title: "Location found",
@@ -123,26 +155,60 @@ const LocationPicker = ({ location, onLocationChange }: LocationPickerProps) => 
       return;
     }
 
-    // For production, you would use Google Maps Geocoding API here
-    // Mock search functionality for now
-    const mockCoordinates = {
-      latitude: 24.8607 + (Math.random() - 0.5) * 0.1,
-      longitude: 67.0011 + (Math.random() - 0.5) * 0.1
-    };
+    try {
+      // Use Google Maps Geocoding API for forward geocoding
+      if (GOOGLE_MAPS_API_KEY) {
+        const response = await fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(searchAddress)}&key=${GOOGLE_MAPS_API_KEY}`
+        );
+        const data = await response.json();
+        
+        if (data.status === 'OK' && data.results.length > 0) {
+          const result = data.results[0];
+          const { lat, lng } = result.geometry.location;
+          const addressComponents = result.address_components;
+          
+          // Extract address components
+          const sublocality = addressComponents.find(c => c.types.includes('sublocality_level_1'))?.long_name || '';
+          const locality = addressComponents.find(c => c.types.includes('locality'))?.long_name || '';
+          const city = addressComponents.find(c => c.types.includes('administrative_area_level_2'))?.long_name || 
+                      addressComponents.find(c => c.types.includes('locality'))?.long_name || 'Unknown City';
+          
+          const locationData: LocationData = {
+            latitude: lat,
+            longitude: lng,
+            address: result.formatted_address,
+            city: city,
+            area: sublocality || locality || 'Unknown Area'
+          };
 
-    const locationData: LocationData = {
-      ...mockCoordinates,
-      address: searchAddress,
-      city: "Karachi",
-      area: "Area 1"
-    };
-
-    onLocationChange(locationData);
-    
-    toast({
-      title: "Location found",
-      description: "Address location has been set successfully.",
-    });
+          onLocationChange(locationData);
+          
+          toast({
+            title: "Location found",
+            description: "Address location has been set successfully.",
+          });
+        } else {
+          toast({
+            title: "Address not found",
+            description: "Could not find the specified address. Please try a different search.",
+            variant: "destructive",
+          });
+        }
+      } else {
+        toast({
+          title: "Search unavailable",
+          description: "Address search is currently being configured.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Search error",
+        description: "Failed to search for the address. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
