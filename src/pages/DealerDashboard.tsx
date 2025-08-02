@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -446,10 +447,10 @@ const DealerDashboard = () => {
               <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold text-foreground">My Vehicles</h2>
                 <Button asChild>
-                  <a href="/add-car">
+                  <Link to="/add-car">
                     <Plus className="w-4 h-4 mr-2" />
                     Add Vehicle
-                  </a>
+                  </Link>
                 </Button>
               </div>
 
