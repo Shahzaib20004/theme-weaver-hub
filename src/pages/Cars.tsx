@@ -64,8 +64,12 @@ const Cars = () => {
     try {
       const { data, error } = await supabase
         .from('cars')
-        .select('*')
-        .eq('status', 'approved')
+        .select(`
+          *,
+          car_brands(name),
+          car_categories(name)
+        `)
+        .eq('is_available', true)
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -77,7 +81,14 @@ const Cars = () => {
         });
         setCars([]);
       } else {
-        setCars(data || []);
+        // Transform the data to match expected format
+        const transformedData = (data || []).map(car => ({
+          ...car,
+          brand: car.car_brands?.name || 'Unknown Brand',
+          category: car.car_categories?.name || 'Unknown Category',
+          daily_rate: car.price_per_day || 0
+        }));
+        setCars(transformedData);
       }
     } catch (error) {
       console.error('Error fetching cars:', error);
@@ -101,7 +112,8 @@ const Cars = () => {
       let matchesPrice = true;
       if (filters.priceRange) {
         const [min, max] = filters.priceRange.split('-').map(Number);
-        matchesPrice = car.daily_rate >= min && (max ? car.daily_rate <= max : true);
+        const carPrice = car.daily_rate || car.price_per_day || 0;
+        matchesPrice = carPrice >= min && (max ? carPrice <= max : true);
       }
 
       return matchesSearch && matchesBrand && matchesCategory && matchesLocation && matchesPrice;

@@ -42,9 +42,13 @@ const FeaturedCars = () => {
     try {
       const { data, error } = await supabase
         .from('cars')
-        .select('*')
-        .eq('status', 'approved')
-        .in('package_type', ['featured', 'premium'])
+        .select(`
+          *,
+          car_brands(name),
+          car_categories(name)
+        `)
+        .eq('is_available', true)
+        .eq('is_featured', true)
         .order('created_at', { ascending: false })
         .limit(6);
 
@@ -52,7 +56,14 @@ const FeaturedCars = () => {
         console.error('Error fetching featured cars:', error);
         setFeaturedCars([]);
       } else {
-        setFeaturedCars(data || []);
+        // Transform the data to match expected format
+        const transformedData = (data || []).map(car => ({
+          ...car,
+          brand: car.car_brands?.name || 'Unknown Brand',
+          category: car.car_categories?.name || 'Unknown Category',
+          daily_rate: car.price_per_day || 0
+        }));
+        setFeaturedCars(transformedData);
       }
     } catch (error) {
       console.error('Error fetching featured cars:', error);
