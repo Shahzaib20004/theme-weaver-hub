@@ -7,14 +7,393 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "12.2.12 (cd3cf9e)"
-  }
   public: {
     Tables: {
-      [_ in never]: never
+      users: {
+        Row: {
+          id: string
+          email: string
+          full_name: string | null
+          phone: string | null
+          role: 'customer' | 'dealer' | 'admin'
+          avatar_url: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          email: string
+          full_name?: string | null
+          phone?: string | null
+          role?: 'customer' | 'dealer' | 'admin'
+          avatar_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string
+          full_name?: string | null
+          phone?: string | null
+          role?: 'customer' | 'dealer' | 'admin'
+          avatar_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      dealerships: {
+        Row: {
+          id: string
+          name: string
+          description: string | null
+          address: string
+          city: string
+          state: string
+          zip_code: string | null
+          phone: string | null
+          email: string | null
+          website: string | null
+          logo_url: string | null
+          banner_url: string | null
+          latitude: number | null
+          longitude: number | null
+          operating_hours: Json | null
+          services: Json | null
+          rating: number
+          total_reviews: number
+          is_verified: boolean
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          description?: string | null
+          address: string
+          city: string
+          state: string
+          zip_code?: string | null
+          phone?: string | null
+          email?: string | null
+          website?: string | null
+          logo_url?: string | null
+          banner_url?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          operating_hours?: Json | null
+          services?: Json | null
+          rating?: number
+          total_reviews?: number
+          is_verified?: boolean
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string | null
+          address?: string
+          city?: string
+          state?: string
+          zip_code?: string | null
+          phone?: string | null
+          email?: string | null
+          website?: string | null
+          logo_url?: string | null
+          banner_url?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          operating_hours?: Json | null
+          services?: Json | null
+          rating?: number
+          total_reviews?: number
+          is_verified?: boolean
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      car_brands: {
+        Row: {
+          id: string
+          name: string
+          logo_url: string | null
+          description: string | null
+          country_of_origin: string | null
+          is_active: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          logo_url?: string | null
+          description?: string | null
+          country_of_origin?: string | null
+          is_active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          logo_url?: string | null
+          description?: string | null
+          country_of_origin?: string | null
+          is_active?: boolean
+          created_at?: string
+        }
+      }
+      cars: {
+        Row: {
+          id: string
+          dealership_id: string
+          brand_id: string
+          model: string
+          year: number
+          category: string
+          transmission: 'manual' | 'automatic' | 'cvt'
+          fuel_type: string
+          mileage: number | null
+          daily_rate: number
+          weekly_rate: number | null
+          monthly_rate: number | null
+          with_driver: boolean
+          driver_rate: number | null
+          features: Json | null
+          images: Json | null
+          description: string | null
+          status: 'available' | 'rented' | 'maintenance' | 'sold'
+          location: string | null
+          latitude: number | null
+          longitude: number | null
+          is_featured: boolean
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          dealership_id: string
+          brand_id: string
+          model: string
+          year: number
+          category: string
+          transmission: 'manual' | 'automatic' | 'cvt'
+          fuel_type: string
+          mileage?: number | null
+          daily_rate: number
+          weekly_rate?: number | null
+          monthly_rate?: number | null
+          with_driver?: boolean
+          driver_rate?: number | null
+          features?: Json | null
+          images?: Json | null
+          description?: string | null
+          status?: 'available' | 'rented' | 'maintenance' | 'sold'
+          location?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          is_featured?: boolean
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          dealership_id?: string
+          brand_id?: string
+          model?: string
+          year?: number
+          category?: string
+          transmission?: 'manual' | 'automatic' | 'cvt'
+          fuel_type?: string
+          mileage?: number | null
+          daily_rate?: number
+          weekly_rate?: number | null
+          monthly_rate?: number | null
+          with_driver?: boolean
+          driver_rate?: number | null
+          features?: Json | null
+          images?: Json | null
+          description?: string | null
+          status?: 'available' | 'rented' | 'maintenance' | 'sold'
+          location?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          is_featured?: boolean
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      bookings: {
+        Row: {
+          id: string
+          car_id: string
+          customer_id: string
+          dealership_id: string
+          start_date: string
+          end_date: string
+          total_days: number
+          total_amount: number
+          with_driver: boolean
+          driver_amount: number
+          status: 'pending' | 'confirmed' | 'cancelled' | 'completed'
+          payment_status: string
+          payment_method: string | null
+          special_requests: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          car_id: string
+          customer_id: string
+          dealership_id: string
+          start_date: string
+          end_date: string
+          total_days: number
+          total_amount: number
+          with_driver?: boolean
+          driver_amount?: number
+          status?: 'pending' | 'confirmed' | 'cancelled' | 'completed'
+          payment_status?: string
+          payment_method?: string | null
+          special_requests?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          car_id?: string
+          customer_id?: string
+          dealership_id?: string
+          start_date?: string
+          end_date?: string
+          total_days?: number
+          total_amount?: number
+          with_driver?: boolean
+          driver_amount?: number
+          status?: 'pending' | 'confirmed' | 'cancelled' | 'completed'
+          payment_status?: string
+          payment_method?: string | null
+          special_requests?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      reviews: {
+        Row: {
+          id: string
+          booking_id: string
+          car_id: string
+          dealership_id: string
+          customer_id: string
+          rating: number
+          comment: string | null
+          is_public: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          booking_id: string
+          car_id: string
+          dealership_id: string
+          customer_id: string
+          rating: number
+          comment?: string | null
+          is_public?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          booking_id?: string
+          car_id?: string
+          dealership_id?: string
+          customer_id?: string
+          rating?: number
+          comment?: string | null
+          is_public?: boolean
+          created_at?: string
+        }
+      }
+      daily_offers: {
+        Row: {
+          id: string
+          dealership_id: string
+          car_id: string | null
+          title: string
+          description: string | null
+          discount_percentage: number | null
+          discount_amount: number | null
+          start_date: string
+          end_date: string
+          is_active: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          dealership_id: string
+          car_id?: string | null
+          title: string
+          description?: string | null
+          discount_percentage?: number | null
+          discount_amount?: number | null
+          start_date: string
+          end_date: string
+          is_active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          dealership_id?: string
+          car_id?: string | null
+          title?: string
+          description?: string | null
+          discount_percentage?: number | null
+          discount_amount?: number | null
+          start_date?: string
+          end_date?: string
+          is_active?: boolean
+          created_at?: string
+        }
+      }
+      contact_inquiries: {
+        Row: {
+          id: string
+          name: string
+          email: string
+          phone: string | null
+          subject: string
+          message: string
+          dealership_id: string | null
+          status: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          email: string
+          phone?: string | null
+          subject: string
+          message: string
+          dealership_id?: string | null
+          status?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          email?: string
+          phone?: string | null
+          subject?: string
+          message?: string
+          dealership_id?: string | null
+          status?: string
+          created_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +402,10 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      user_role: 'customer' | 'dealer' | 'admin'
+      car_status: 'available' | 'rented' | 'maintenance' | 'sold'
+      booking_status: 'pending' | 'confirmed' | 'cancelled' | 'completed'
+      transmission_type: 'manual' | 'automatic' | 'cvt'
     }
     CompositeTypes: {
       [_ in never]: never
@@ -31,125 +413,18 @@ export type Database = {
   }
 }
 
-type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
-
-type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
-
 export type Tables<
-  DefaultSchemaTableNameOrOptions extends
-    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
-    | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
-  }
-    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
-> = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
-}
-  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
-    }
-    ? R
-    : never
-  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
-        DefaultSchema["Views"])
-    ? (DefaultSchema["Tables"] &
-        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
-        Row: infer R
-      }
-      ? R
-      : never
-    : never
+  T extends keyof Database['public']['Tables'],
+> = Database['public']['Tables'][T]['Row']
 
 export type TablesInsert<
-  DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
-    | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
-  }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
-> = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
-}
-  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
-    }
-    ? I
-    : never
-  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
-    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Insert: infer I
-      }
-      ? I
-      : never
-    : never
+  T extends keyof Database['public']['Tables'],
+> = Database['public']['Tables'][T]['Insert']
 
 export type TablesUpdate<
-  DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
-    | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
-  }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
-> = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
-}
-  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
-    }
-    ? U
-    : never
-  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
-    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Update: infer U
-      }
-      ? U
-      : never
-    : never
+  T extends keyof Database['public']['Tables'],
+> = Database['public']['Tables'][T]['Update']
 
 export type Enums<
-  DefaultSchemaEnumNameOrOptions extends
-    | keyof DefaultSchema["Enums"]
-    | { schema: keyof DatabaseWithoutInternals },
-  EnumName extends DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
-  }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
-> = DefaultSchemaEnumNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
-}
-  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
-    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
-    : never
-
-export type CompositeTypes<
-  PublicCompositeTypeNameOrOptions extends
-    | keyof DefaultSchema["CompositeTypes"]
-    | { schema: keyof DatabaseWithoutInternals },
-  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
-  }
-    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
-> = PublicCompositeTypeNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
-}
-  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
-    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
-    : never
-
-export const Constants = {
-  public: {
-    Enums: {},
-  },
-} as const
+  T extends keyof Database['public']['Enums'],
+> = Database['public']['Enums'][T]

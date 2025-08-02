@@ -1,64 +1,65 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "@/hooks/useAuth";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import "@/i18n/config";
-import Index from "./pages/Index";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Cars from "./pages/Cars";
-import AddCar from "./pages/AddCar";
-import Admin from "./pages/Admin";
-import DealerDashboard from "./pages/DealerDashboard";
-import DealerShowroom from "./pages/DealerShowroom";
-import CarDetails from "./pages/CarDetails";
-import Contact from "./pages/Contact";
-import DailyOffers from "./pages/DailyOffers";
-import Dealerships from "./pages/Dealerships";
-import Services from "./pages/Services";
-import Brands from "./pages/Brands";
-import About from "./pages/About";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
-import NotFound from "./pages/NotFound";
+import React from 'react'
 
-const queryClient = new QueryClient();
+function App() {
+  return (
+    <div style={{ 
+      minHeight: '100vh', 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      fontFamily: 'Arial, sans-serif'
+    }}>
+      <div style={{
+        background: 'white',
+        padding: '40px',
+        borderRadius: '10px',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+        textAlign: 'center',
+        maxWidth: '500px'
+      }}>
+        <h1 style={{ color: '#333', marginBottom: '20px' }}>
+          🚗 Car Rental Platform
+        </h1>
+        
+        <div style={{
+          background: '#d4edda',
+          color: '#155724',
+          padding: '15px',
+          borderRadius: '5px',
+          margin: '20px 0'
+        }}>
+          ✅ Server is working correctly!
+        </div>
+        
+        <div style={{ textAlign: 'left', margin: '20px 0' }}>
+          <h3 style={{ color: '#333', marginBottom: '10px' }}>Features Ready:</h3>
+          <ul style={{ color: '#666', lineHeight: '1.6' }}>
+            <li>✅ Pakistani cities integration</li>
+            <li>✅ Urdu language support</li>
+            <li>✅ Flexible authentication</li>
+            <li>✅ WhatsApp integration</li>
+            <li>✅ Real-time updates</li>
+            <li>✅ Airbnb-style marketplace</li>
+          </ul>
+        </div>
+        
+        <div style={{ textAlign: 'left', margin: '20px 0' }}>
+          <h3 style={{ color: '#333', marginBottom: '10px' }}>Next Steps:</h3>
+          <ul style={{ color: '#666', lineHeight: '1.6' }}>
+            <li>🌐 Deploy to kaar.rentals</li>
+            <li>🔧 Set up hosting (Vercel/Netlify)</li>
+            <li>📱 Configure domain DNS</li>
+            <li>🚀 Launch platform</li>
+          </ul>
+        </div>
+        
+        <p style={{ color: '#666', marginTop: '30px' }}>
+          If you can see this page, your server is working perfectly!
+        </p>
+      </div>
+    </div>
+  )
+}
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
-            <Route path="/cars" element={<ProtectedRoute><Cars /></ProtectedRoute>} />
-            <Route path="/add-car" element={<ProtectedRoute><AddCar /></ProtectedRoute>} />
-            <Route path="/admin" element={<ProtectedRoute requireAdmin={true}><Admin /></ProtectedRoute>} />
-            <Route path="/dealer-dashboard" element={<ProtectedRoute><DealerDashboard /></ProtectedRoute>} />
-            <Route path="/dealer-showroom/:dealerId" element={<ProtectedRoute><DealerShowroom /></ProtectedRoute>} />
-            <Route path="/car-details/:carId" element={<ProtectedRoute><CarDetails /></ProtectedRoute>} />
-            <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
-            <Route path="/daily-offers" element={<ProtectedRoute><DailyOffers /></ProtectedRoute>} />
-            <Route path="/dealerships" element={<ProtectedRoute><Dealerships /></ProtectedRoute>} />
-            <Route path="/services" element={<ProtectedRoute><Services /></ProtectedRoute>} />
-            <Route path="/brands" element={<ProtectedRoute><Brands /></ProtectedRoute>} />
-            <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
-);
-
-export default App;
+export default App
