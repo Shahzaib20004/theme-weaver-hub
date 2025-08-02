@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
 import Logo from "./Logo";
 
 const Footer = () => {
@@ -31,12 +32,12 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold text-foreground mb-6">Quick Links</h4>
             <div className="space-y-3">
-              <a href="#" className="block text-text-secondary hover:text-gold transition-colors">All Cars</a>
-              <a href="#" className="block text-text-secondary hover:text-gold transition-colors">Our Fleet</a>
-              <a href="#" className="block text-text-secondary hover:text-gold transition-colors">Car Brands</a>
-              <a href="#" className="block text-text-secondary hover:text-gold transition-colors">Daily Offers</a>
-              <a href="#" className="block text-text-secondary hover:text-gold transition-colors">Rental Prices</a>
-              <a href="#" className="block text-text-secondary hover:text-gold transition-colors">About Us</a>
+              <Link to="/cars" className="block text-text-secondary hover:text-gold transition-colors">All Cars</Link>
+              <Link to="/cars" className="block text-text-secondary hover:text-gold transition-colors">Our Fleet</Link>
+              <Link to="/brands" className="block text-text-secondary hover:text-gold transition-colors">Car Brands</Link>
+              <Link to="/daily-offers" className="block text-text-secondary hover:text-gold transition-colors">Daily Offers</Link>
+              <Link to="/cars" className="block text-text-secondary hover:text-gold transition-colors">Rental Prices</Link>
+              <Link to="/about" className="block text-text-secondary hover:text-gold transition-colors">About Us</Link>
             </div>
           </div>
 
@@ -92,7 +93,7 @@ const Footer = () => {
         <div className="border-t border-border mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-text-secondary text-sm">
-              © 2024 Kaar.Rentals. All rights reserved.
+              © 2025 Kaar.Rentals. All rights reserved.
             </p>
             
             {/* Social Media Links */}
@@ -110,7 +111,7 @@ const Footer = () => {
                   </svg>
                 </a>
                 <a
-                  href="https://facebook.com"
+                  href="https://www.facebook.com/share/16sg1pXed3/?mibextid=wwXIfr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-8 h-8 bg-blue-600 rounded-md flex items-center justify-center text-white hover:-translate-y-1 transition-transform duration-300"
@@ -143,8 +144,8 @@ const Footer = () => {
             </div>
             
             <div className="flex gap-6 text-sm">
-              <a href="/privacy" className="text-text-secondary hover:text-gold transition-colors">Privacy Policy</a>
-              <a href="/terms" className="text-text-secondary hover:text-gold transition-colors">Terms of Service</a>
+              <Link to="/privacy" className="text-text-secondary hover:text-gold transition-colors">Privacy Policy</Link>
+              <Link to="/terms" className="text-text-secondary hover:text-gold transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import CarBrands from "@/components/CarBrands";
 import FeaturedCars from "@/components/FeaturedCars";
 import Footer from "@/components/Footer";
 import RealTimeStats from "@/components/RealTimeStats";
+import RealTimeAvailability from "@/components/RealTimeAvailability";
 
 const Index = () => {
   return (
@@ -13,6 +14,7 @@ const Index = () => {
       <Hero />
       <div className="container mx-auto px-6 py-8">
         <RealTimeStats />
+        <RealTimeAvailability />
       </div>
       <CarCategories />
       <CarBrands />

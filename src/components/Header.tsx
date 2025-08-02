@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
+import RealTimeNotifications from "./RealTimeNotifications";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -164,6 +165,9 @@ const Header = () => {
             {/* Language Toggle */}
             <LanguageToggle />
 
+            {/* Real-time Notifications */}
+            <RealTimeNotifications />
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -187,7 +191,7 @@ const Header = () => {
                 </div>
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/share/16sg1pXed3/?mibextid=wwXIfr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative w-9 h-9 rounded-full bg-gradient-to-br from-gold to-gold-dark p-0.5 hover:-translate-y-1 transition-all duration-300 hover:shadow-gold"
