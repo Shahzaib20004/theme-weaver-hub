@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MapPin, Navigation, Search } from "lucide-react";
+import { MapPin, Navigation, Search, AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface LocationData {
@@ -25,13 +25,16 @@ const LocationPicker = ({ location, onLocationChange }: LocationPickerProps) => 
   const [mapUrl, setMapUrl] = useState("");
   const { toast } = useToast();
 
+  // Google Maps API key - should be set in environment variables
+  const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
   useEffect(() => {
-    if (location) {
+    if (location && GOOGLE_MAPS_API_KEY) {
       // Generate Google Maps embed URL
-      const embedUrl = `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${location.latitude},${location.longitude}&zoom=15`;
+      const embedUrl = `https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${location.latitude},${location.longitude}&zoom=15`;
       setMapUrl(embedUrl);
     }
-  }, [location]);
+  }, [location, GOOGLE_MAPS_API_KEY]);
 
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {
@@ -50,7 +53,8 @@ const LocationPicker = ({ location, onLocationChange }: LocationPickerProps) => 
         const { latitude, longitude } = position.coords;
         
         try {
-          // Reverse geocoding using a mock service (replace with actual API)
+          // You can implement reverse geocoding here using Google Maps Geocoding API
+          // For now, using mock data
           const mockAddress = `Street ${Math.floor(Math.random() * 100)}, Sector ${Math.floor(Math.random() * 20)}`;
           const cities = ["Karachi", "Lahore", "Islamabad", "Rawalpindi", "Faisalabad"];
           const randomCity = cities[Math.floor(Math.random() * cities.length)];
@@ -119,7 +123,8 @@ const LocationPicker = ({ location, onLocationChange }: LocationPickerProps) => 
       return;
     }
 
-    // Mock search functionality (replace with actual geocoding service)
+    // For production, you would use Google Maps Geocoding API here
+    // Mock search functionality for now
     const mockCoordinates = {
       latitude: 24.8607 + (Math.random() - 0.5) * 0.1,
       longitude: 67.0011 + (Math.random() - 0.5) * 0.1
@@ -147,6 +152,14 @@ const LocationPicker = ({ location, onLocationChange }: LocationPickerProps) => 
           <MapPin className="w-5 h-5 text-gold" />
           Car Location
         </CardTitle>
+        {!GOOGLE_MAPS_API_KEY && (
+          <div className="flex items-center gap-2 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+            <AlertCircle className="w-4 h-4 text-yellow-500" />
+            <p className="text-sm text-yellow-600">
+              Google Maps API key not configured. Add VITE_GOOGLE_MAPS_API_KEY to your environment variables for full map functionality.
+            </p>
+          </div>
+        )}
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Current Location Button */}
@@ -194,18 +207,36 @@ const LocationPicker = ({ location, onLocationChange }: LocationPickerProps) => 
               </div>
             </div>
 
-            {/* Mock Map Display */}
+            {/* Map Display */}
             <div className="w-full h-64 bg-dark-elevated rounded-lg border border-border flex items-center justify-center">
-              <div className="text-center">
-                <MapPin className="w-12 h-12 text-gold mx-auto mb-2" />
-                <p className="text-foreground font-medium">Map Preview</p>
-                <p className="text-sm text-muted-foreground">
-                  {location.city} - {location.area}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Lat: {location.latitude.toFixed(4)}, Lng: {location.longitude.toFixed(4)}
-                </p>
-              </div>
+              {GOOGLE_MAPS_API_KEY && mapUrl ? (
+                <iframe
+                  src={mapUrl}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="rounded-lg"
+                ></iframe>
+              ) : (
+                <div className="text-center">
+                  <MapPin className="w-12 h-12 text-gold mx-auto mb-2" />
+                  <p className="text-foreground font-medium">Map Preview</p>
+                  <p className="text-sm text-muted-foreground">
+                    {location.city} - {location.area}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Lat: {location.latitude.toFixed(4)}, Lng: {location.longitude.toFixed(4)}
+                  </p>
+                  {!GOOGLE_MAPS_API_KEY && (
+                    <p className="text-xs text-yellow-500 mt-2">
+                      Configure Google Maps API for interactive map
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="flex gap-2">

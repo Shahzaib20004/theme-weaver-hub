@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TrendingUp, TrendingDown, DollarSign, Clock, Eye } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface PriceAlert {
   id: string;
@@ -18,74 +19,49 @@ const RealTimePricing = () => {
   const [currentViews, setCurrentViews] = useState(0);
 
   useEffect(() => {
-    // Initialize with some price alerts
-    const initialAlerts: PriceAlert[] = [
-      {
-        id: '1',
-        carModel: 'BMW X5',
-        oldPrice: 8500,
-        newPrice: 9200,
-        priceChange: 8.2,
-        changeType: 'increase',
-        timestamp: new Date(Date.now() - 10 * 60 * 1000),
-        demand: 'high',
-        location: 'Karachi'
-      },
-      {
-        id: '2',
-        carModel: 'Toyota Camry',
-        oldPrice: 4200,
-        newPrice: 3800,
-        priceChange: -9.5,
-        changeType: 'decrease',
-        timestamp: new Date(Date.now() - 25 * 60 * 1000),
-        demand: 'medium',
-        location: 'Lahore'
-      }
-    ];
-
-    setPriceAlerts(initialAlerts);
-
-    // Simulate current viewers
+    // Simulate current viewers (since we don't have real analytics)
     const updateViewers = () => {
-      setCurrentViews(Math.floor(Math.random() * 25) + 5);
+      setCurrentViews(Math.floor(Math.random() * 12) + 2); // 2-14 viewers
     };
 
     updateViewers();
-    const viewersInterval = setInterval(updateViewers, 15000);
+    const viewersInterval = setInterval(updateViewers, 20000);
 
-    // Simulate new price updates
-    const priceUpdateInterval = setInterval(() => {
-      const carModels = [
-        'Honda Civic', 'Mercedes C-Class', 'Audi A4', 'Toyota Corolla', 
-        'BMW 3 Series', 'Nissan Altima', 'Hyundai Elantra'
-      ];
-      const locations = ['Karachi', 'Lahore', 'Islamabad', 'Faisalabad'];
-      
-      const randomCar = carModels[Math.floor(Math.random() * carModels.length)];
-      const randomLocation = locations[Math.floor(Math.random() * locations.length)];
-      const oldPrice = Math.floor(Math.random() * 5000) + 2000;
-      const priceChangePercent = (Math.random() - 0.5) * 20; // -10% to +10%
-      const newPrice = Math.floor(oldPrice * (1 + priceChangePercent / 100));
-      
-      const newAlert: PriceAlert = {
-        id: Date.now().toString(),
-        carModel: randomCar,
-        oldPrice,
-        newPrice,
-        priceChange: priceChangePercent,
-        changeType: priceChangePercent > 0 ? 'increase' : 'decrease',
-        timestamp: new Date(),
-        demand: Math.random() > 0.6 ? 'high' : Math.random() > 0.3 ? 'medium' : 'low',
-        location: randomLocation
-      };
+    // Set up real-time subscription for price changes
+    const priceSubscription = supabase
+      .channel('car_price_changes')
+      .on('postgres_changes', { 
+        event: 'UPDATE', 
+        schema: 'public', 
+        table: 'cars',
+        filter: 'status=eq.approved'
+      }, (payload) => {
+        // Only track if daily_rate changed
+        if (payload.old.daily_rate !== payload.new.daily_rate) {
+          const oldPrice = payload.old.daily_rate;
+          const newPrice = payload.new.daily_rate;
+          const priceChange = ((newPrice - oldPrice) / oldPrice) * 100;
+          
+          const newAlert: PriceAlert = {
+            id: Date.now().toString(),
+            carModel: `${payload.new.brand} ${payload.new.model}`,
+            oldPrice,
+            newPrice,
+            priceChange,
+            changeType: priceChange > 0 ? 'increase' : 'decrease',
+            timestamp: new Date(),
+            demand: Math.abs(priceChange) > 10 ? 'high' : Math.abs(priceChange) > 5 ? 'medium' : 'low',
+            location: payload.new.location?.city || 'Unknown'
+          };
 
-      setPriceAlerts(prev => [newAlert, ...prev.slice(0, 2)]);
-    }, 40000); // New price update every 40 seconds
+          setPriceAlerts(prev => [newAlert, ...prev.slice(0, 2)]);
+        }
+      })
+      .subscribe();
 
     return () => {
       clearInterval(viewersInterval);
-      clearInterval(priceUpdateInterval);
+      supabase.removeChannel(priceSubscription);
     };
   }, []);
 
@@ -132,65 +108,75 @@ const RealTimePricing = () => {
       </div>
 
       <div className="space-y-4">
-        {priceAlerts.map((alert) => (
-          <div key={alert.id} className="p-4 bg-dark-elevated rounded-lg border border-border hover:border-gold/30 transition-colors">
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <h3 className="font-semibold text-foreground">{alert.carModel}</h3>
-                  <span className="text-xs text-muted-foreground">• {alert.location}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${getDemandColor(alert.demand)} bg-current/10`}>
-                    {getDemandLabel(alert.demand)}
-                  </span>
-                </div>
-                
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground line-through">
-                      PKR {alert.oldPrice.toLocaleString()}
-                    </span>
-                    <span className="text-lg font-bold text-gold">
-                      PKR {alert.newPrice.toLocaleString()}
+        {priceAlerts.length === 0 ? (
+          <div className="text-center py-12">
+            <DollarSign className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
+            <h3 className="text-lg font-semibold text-foreground mb-2">No Price Changes Yet</h3>
+            <p className="text-muted-foreground">
+              Price updates will appear here when dealers modify their car rental rates.
+            </p>
+          </div>
+        ) : (
+          priceAlerts.map((alert) => (
+            <div key={alert.id} className="p-4 bg-dark-elevated rounded-lg border border-border hover:border-gold/30 transition-colors">
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h3 className="font-semibold text-foreground">{alert.carModel}</h3>
+                    <span className="text-xs text-muted-foreground">• {alert.location}</span>
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${getDemandColor(alert.demand)} bg-current/10`}>
+                      {getDemandLabel(alert.demand)}
                     </span>
                   </div>
                   
-                  <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                    alert.changeType === 'increase' 
-                      ? 'bg-red-500/10 text-red-500' 
-                      : 'bg-green-500/10 text-green-500'
-                  }`}>
-                    {alert.changeType === 'increase' ? (
-                      <TrendingUp className="w-3 h-3" />
-                    ) : (
-                      <TrendingDown className="w-3 h-3" />
-                    )}
-                    <span>
-                      {alert.changeType === 'increase' ? '+' : ''}{alert.priceChange.toFixed(1)}%
-                    </span>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-muted-foreground line-through">
+                        PKR {alert.oldPrice.toLocaleString()}
+                      </span>
+                      <span className="text-lg font-bold text-gold">
+                        PKR {alert.newPrice.toLocaleString()}
+                      </span>
+                    </div>
+                    
+                    <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                      alert.changeType === 'increase' 
+                        ? 'bg-red-500/10 text-red-500' 
+                        : 'bg-green-500/10 text-green-500'
+                    }`}>
+                      {alert.changeType === 'increase' ? (
+                        <TrendingUp className="w-3 h-3" />
+                      ) : (
+                        <TrendingDown className="w-3 h-3" />
+                      )}
+                      <span>
+                        {alert.changeType === 'increase' ? '+' : ''}{alert.priceChange.toFixed(1)}%
+                      </span>
+                    </div>
                   </div>
+                </div>
+                
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Clock className="w-3 h-3" />
+                  <span>{formatTimeAgo(alert.timestamp)}</span>
                 </div>
               </div>
               
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <Clock className="w-3 h-3" />
-                <span>{formatTimeAgo(alert.timestamp)}</span>
-              </div>
+              {alert.demand === 'high' && (
+                <div className="mt-3 p-2 bg-red-500/10 border border-red-500/20 rounded-lg">
+                  <p className="text-xs text-red-400">
+                    ⚡ High demand in {alert.location} - Prices may increase soon
+                  </p>
+                </div>
+              )}
             </div>
-            
-            {alert.demand === 'high' && (
-              <div className="mt-3 p-2 bg-red-500/10 border border-red-500/20 rounded-lg">
-                <p className="text-xs text-red-400">
-                  ⚡ High demand in {alert.location} - Prices may increase soon
-                </p>
-              </div>
-            )}
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
       <div className="mt-6 pt-4 border-t border-border">
         <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <span>Prices update automatically based on demand</span>
+          <span>Prices update automatically based on dealer changes</span>
           <span>Last updated: {new Date().toLocaleTimeString()}</span>
         </div>
       </div>

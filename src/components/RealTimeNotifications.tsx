@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Bell, X, Check, AlertCircle, Car, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 
 interface Notification {
   id: string;
@@ -16,79 +18,60 @@ const RealTimeNotifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const { user } = useAuth();
 
   useEffect(() => {
-    // Initial notifications
-    const initialNotifications: Notification[] = [
-      {
-        id: '1',
-        type: 'success',
-        title: 'Booking Confirmed',
-        message: 'Your BMW X5 rental for tomorrow has been confirmed!',
-        timestamp: new Date(Date.now() - 5 * 60 * 1000),
-        read: false,
-        actionRequired: false
-      },
-      {
-        id: '2',
-        type: 'info',
-        title: 'New Vehicle Available',
-        message: 'Mercedes C-Class is now available in your area',
-        timestamp: new Date(Date.now() - 15 * 60 * 1000),
-        read: false,
-        actionRequired: false
-      }
-    ];
+    if (!user) return;
 
-    setNotifications(initialNotifications);
+    // Set up real-time subscriptions for various events
+    const carStatusSubscription = supabase
+      .channel('car_status_notifications')
+      .on('postgres_changes', { 
+        event: '*', 
+        schema: 'public', 
+        table: 'cars',
+        filter: `user_id=eq.${user.id}`
+      }, (payload) => {
+        let newNotification: Notification | null = null;
 
-    // Simulate new notifications periodically
-    const notificationInterval = setInterval(() => {
-      const newNotificationTypes = [
-        {
-          type: 'success' as const,
-          title: 'Payment Confirmed',
-          message: 'Your rental payment has been processed successfully'
-        },
-        {
-          type: 'info' as const,
-          title: 'Vehicle Returned',
-          message: 'Toyota Camry has been returned and is available for booking'
-        },
-        {
-          type: 'warning' as const,
-          title: 'Reminder',
-          message: 'Your rental pickup is in 2 hours. Don\'t forget your documents!'
-        },
-        {
-          type: 'info' as const,
-          title: 'New Review',
-          message: 'You received a 5-star review for your recent rental'
-        },
-        {
-          type: 'success' as const,
-          title: 'Booking Request',
-          message: 'Someone is interested in booking your Honda Civic'
+        if (payload.eventType === 'UPDATE') {
+          // Car status changed
+          if (payload.old.status !== payload.new.status) {
+            if (payload.new.status === 'approved') {
+              newNotification = {
+                id: Date.now().toString(),
+                type: 'success',
+                title: 'Car Listing Approved',
+                message: `Your ${payload.new.brand} ${payload.new.model} listing has been approved and is now live!`,
+                timestamp: new Date(),
+                read: false,
+                actionRequired: false
+              };
+            } else if (payload.new.status === 'rejected') {
+              newNotification = {
+                id: Date.now().toString(),
+                type: 'error',
+                title: 'Car Listing Rejected',
+                message: `Your ${payload.new.brand} ${payload.new.model} listing was rejected. Please check the requirements and resubmit.`,
+                timestamp: new Date(),
+                read: false,
+                actionRequired: true
+              };
+            }
+          }
         }
-      ];
 
-      const randomNotification = newNotificationTypes[Math.floor(Math.random() * newNotificationTypes.length)];
-      
-      const newNotification: Notification = {
-        id: Date.now().toString(),
-        ...randomNotification,
-        timestamp: new Date(),
-        read: false,
-        actionRequired: Math.random() > 0.7
-      };
+        if (newNotification) {
+          setNotifications(prev => [newNotification!, ...prev.slice(0, 9)]);
+        }
+      })
+      .subscribe();
 
-      setNotifications(prev => [newNotification, ...prev.slice(0, 4)]);
-    }, 45000); // New notification every 45 seconds
-
+    // Clean up subscription
     return () => {
-      clearInterval(notificationInterval);
+      supabase.removeChannel(carStatusSubscription);
     };
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     setUnreadCount(notifications.filter(n => !n.read).length);
@@ -135,6 +118,11 @@ const RealTimeNotifications = () => {
     if (diffInHours < 24) return `${diffInHours}h ago`;
     return `${Math.floor(diffInHours / 24)}d ago`;
   };
+
+  // Don't show notification bell for non-logged in users
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="relative">
@@ -185,12 +173,13 @@ const RealTimeNotifications = () => {
               <div className="p-4 text-center text-muted-foreground">
                 <Bell className="w-8 h-8 mx-auto mb-2 opacity-50" />
                 <p>No notifications yet</p>
+                <p className="text-xs mt-1">You'll receive notifications about your car listings here</p>
               </div>
             ) : (
               notifications.map((notification) => (
                 <div
                   key={notification.id}
-                  className={`p-4 border-b border-border hover:bg-dark-elevated transition-colors cursor-pointer ${
+                  className={`p-4 border-b border-border hover:bg-dark-elevated transition-colors cursor-pointer group ${
                     !notification.read ? 'bg-gold/5' : ''
                   }`}
                   onClick={() => markAsRead(notification.id)}

@@ -18,38 +18,6 @@ const RealTimeAvailability = () => {
   const [availableCars, setAvailableCars] = useState(0);
 
   useEffect(() => {
-    // Simulate real-time activity updates
-    const activities: RecentActivity[] = [
-      {
-        id: '1',
-        type: 'booking',
-        message: 'BMW X5 just booked in Karachi',
-        timestamp: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
-        location: 'Karachi'
-      },
-      {
-        id: '2',
-        type: 'new_car',
-        message: 'New Mercedes C-Class added to fleet',
-        timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-        location: 'Lahore'
-      },
-      {
-        id: '3',
-        type: 'availability',
-        message: 'Audi A6 became available in Islamabad',
-        timestamp: new Date(Date.now() - 8 * 60 * 1000).toISOString(),
-        location: 'Islamabad'
-      }
-    ];
-
-    setRecentActivity(activities);
-
-    // Simulate online users count
-    const updateOnlineUsers = () => {
-      setOnlineUsers(Math.floor(Math.random() * 50) + 20);
-    };
-
     // Get available cars count
     const fetchAvailableCars = async () => {
       try {
@@ -65,11 +33,16 @@ const RealTimeAvailability = () => {
       }
     };
 
+    // Simulate online users count (since we don't have real user session tracking)
+    const updateOnlineUsers = () => {
+      setOnlineUsers(Math.floor(Math.random() * 15) + 3); // Random 3-18 users
+    };
+
     updateOnlineUsers();
     fetchAvailableCars();
 
-    // Update online users every 10 seconds
-    const onlineUsersInterval = setInterval(updateOnlineUsers, 10000);
+    // Update online users every 30 seconds
+    const onlineUsersInterval = setInterval(updateOnlineUsers, 30000);
 
     // Set up real-time subscriptions for cars
     const carsSubscription = supabase
@@ -79,36 +52,25 @@ const RealTimeAvailability = () => {
         schema: 'public', 
         table: 'cars',
         filter: 'status=eq.approved'
-      }, () => {
+      }, (payload) => {
         fetchAvailableCars();
+        
+        // Add real activity based on the database change
+        if (payload.eventType === 'INSERT') {
+          const newActivity: RecentActivity = {
+            id: Date.now().toString(),
+            type: 'new_car',
+            message: `New ${payload.new.brand} ${payload.new.model} added to fleet`,
+            timestamp: new Date().toISOString(),
+            location: payload.new.location?.city || 'Unknown'
+          };
+          setRecentActivity(prev => [newActivity, ...prev.slice(0, 4)]);
+        }
       })
       .subscribe();
 
-    // Simulate new activity every 30 seconds
-    const activityInterval = setInterval(() => {
-      const newActivities = [
-        'Honda Civic just became available in Karachi',
-        'Toyota Camry booked for this weekend',
-        'New Tesla Model 3 added to premium fleet',
-        'BMW 3 Series returned and available now',
-        'Mercedes E-Class booking confirmed for tomorrow'
-      ];
-      
-      const randomActivity = newActivities[Math.floor(Math.random() * newActivities.length)];
-      const newActivity: RecentActivity = {
-        id: Date.now().toString(),
-        type: Math.random() > 0.5 ? 'booking' : 'availability',
-        message: randomActivity,
-        timestamp: new Date().toISOString(),
-        location: ['Karachi', 'Lahore', 'Islamabad'][Math.floor(Math.random() * 3)]
-      };
-
-      setRecentActivity(prev => [newActivity, ...prev.slice(0, 2)]);
-    }, 30000);
-
     return () => {
       clearInterval(onlineUsersInterval);
-      clearInterval(activityInterval);
       supabase.removeChannel(carsSubscription);
     };
   }, []);
@@ -145,34 +107,44 @@ const RealTimeAvailability = () => {
       </div>
 
       <div className="space-y-4">
-        {recentActivity.map((activity) => (
-          <div key={activity.id} className="flex items-start gap-3 p-3 bg-dark-elevated rounded-lg border border-border">
-            <div className="flex-shrink-0 mt-1">
-              {activity.type === 'booking' ? (
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              ) : activity.type === 'new_car' ? (
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              ) : (
-                <div className="w-2 h-2 bg-gold rounded-full"></div>
-              )}
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm text-foreground">{activity.message}</p>
-              <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
-                <div className="flex items-center gap-1">
-                  <Clock className="w-3 h-3" />
-                  <span>{formatTimeAgo(activity.timestamp)}</span>
-                </div>
-                {activity.location && (
-                  <div className="flex items-center gap-1">
-                    <MapPin className="w-3 h-3" />
-                    <span>{activity.location}</span>
-                  </div>
+        {recentActivity.length === 0 ? (
+          <div className="text-center py-12">
+            <Car className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
+            <h3 className="text-lg font-semibold text-foreground mb-2">No Recent Activity</h3>
+            <p className="text-muted-foreground">
+              Activity will appear here when customers list new cars or make bookings.
+            </p>
+          </div>
+        ) : (
+          recentActivity.map((activity) => (
+            <div key={activity.id} className="flex items-start gap-3 p-3 bg-dark-elevated rounded-lg border border-border">
+              <div className="flex-shrink-0 mt-1">
+                {activity.type === 'booking' ? (
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                ) : activity.type === 'new_car' ? (
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                ) : (
+                  <div className="w-2 h-2 bg-gold rounded-full"></div>
                 )}
               </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-foreground">{activity.message}</p>
+                <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    <span>{formatTimeAgo(activity.timestamp)}</span>
+                  </div>
+                  {activity.location && (
+                    <div className="flex items-center gap-1">
+                      <MapPin className="w-3 h-3" />
+                      <span>{activity.location}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
       <div className="mt-4 pt-4 border-t border-border">
