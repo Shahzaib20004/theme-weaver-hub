@@ -1,0 +1,4 @@
+Deployment: SPA Routing Fix
+Timestamp: 2025-08-02 20:47:00 UTC
+Fix: React Router 404 errors on page refresh
+Changes: Updated vercel.json with routes configuration
