@@ -11,10 +11,12 @@ import HowItWorks from "@/components/HowItWorks";
 import TrustSafety from "@/components/TrustSafety";
 import PopularSearches from "@/components/PopularSearches";
 import CustomerTestimonials from "@/components/CustomerTestimonials";
+import PakistaniFeatures from "@/components/PakistaniFeatures";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background mobile-scroll">
       <Header />
       <Hero />
       
@@ -38,6 +40,9 @@ const Index = () => {
       {/* Featured Cars */}
       <FeaturedCars />
       
+      {/* Pakistani Market Features */}
+      <PakistaniFeatures />
+      
       {/* Trust & Safety */}
       <TrustSafety />
       
@@ -45,6 +50,9 @@ const Index = () => {
       <CustomerTestimonials />
       
       <Footer />
+      
+      {/* WhatsApp Floating Button */}
+      <WhatsAppFloat />
     </div>
   );
 };

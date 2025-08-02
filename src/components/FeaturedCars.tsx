@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin, User, Fuel, Calendar, Star, Car, Verified, Heart, Eye, Phone, MessageCircle, Shield, Crown, Clock, Camera } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
+import OptimizedImage from "./OptimizedImage";
 
 interface CarListing {
   id: number;
@@ -169,10 +170,11 @@ const FeaturedCars = () => {
               {/* Image Section */}
               <div className="relative h-56 bg-dark-surface overflow-hidden">
                 {car.images && car.images.length > 0 ? (
-                  <img
+                  <OptimizedImage
                     src={car.images[0]}
                     alt={car.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full group-hover:scale-110 transition-transform duration-700"
+                    priority={index < 3} // Load first 3 images immediately
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gold/10 to-gold-dark/10">
