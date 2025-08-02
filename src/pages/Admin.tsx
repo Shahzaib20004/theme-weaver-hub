@@ -14,8 +14,9 @@ import { AdminCarCard } from "@/components/admin/AdminCarCard";
 import { AdminAdCard } from "@/components/admin/AdminAdCard";
 import { AddCarDialog } from "@/components/admin/AddCarDialog";
 import { AddAdDialog } from "@/components/admin/AddAdDialog";
+import PendingApprovals from "@/components/admin/PendingApprovals";
 import { useToast } from "@/hooks/use-toast";
-import { Trash2, Edit, Plus, Star, Eye } from "lucide-react";
+import { Trash2, Edit, Plus, Star, Eye, Clock } from "lucide-react";
 
 interface Car {
   id: string;
@@ -214,13 +215,18 @@ const Admin = () => {
           <p className="text-muted-foreground">Manage cars, advertisements, and website content</p>
         </div>
 
-        <Tabs defaultValue="cars" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+                  <Tabs defaultValue="approvals" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="approvals">Pending Approvals</TabsTrigger>
             <TabsTrigger value="cars">Cars Management</TabsTrigger>
             <TabsTrigger value="ads">Ads Management</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="approvals" className="space-y-6">
+            <PendingApprovals />
+          </TabsContent>
 
           <TabsContent value="cars" className="space-y-6">
             <div className="flex justify-between items-center">
