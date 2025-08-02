@@ -142,6 +142,36 @@ const AddCar = () => {
           .single();
         categoryId = categoryData?.id;
       }
+
+      // Check if user_id exists in the foreign key table
+      let validUserId = null;
+      if (user?.id) {
+        // First try to use the current user ID
+        validUserId = user.id;
+        
+        // If there's a foreign key constraint, we might need to ensure the user exists in profiles
+        const { data: existingProfile } = await supabase
+          .from('profiles')
+          .select('id, user_id')
+          .eq('user_id', user.id)
+          .single();
+
+        if (!existingProfile) {
+          // Create user profile if it doesn't exist
+          const { error: profileError } = await supabase
+            .from('profiles')
+            .insert([{
+              user_id: user.id,
+              email: user.email || '',
+              role: 'customer'
+            }]);
+          
+          if (profileError) {
+            console.log('Profile creation failed, using user ID directly:', profileError);
+            // Continue with the original user ID
+          }
+        }
+      }
       const listingData = {
         ...formData,
         images,
@@ -174,7 +204,7 @@ const AddCar = () => {
           longitude: location?.longitude || null,
           is_featured: formData.package !== 'basic',
           is_available: true,
-          user_id: user?.id,
+          user_id: validUserId,
           brand_id: brandId,
           category_id: categoryId
         }]);
