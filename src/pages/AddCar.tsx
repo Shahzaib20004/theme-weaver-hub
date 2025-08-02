@@ -17,6 +17,7 @@ import PaymentModal from "@/components/PaymentModal";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { testDatabaseConnection } from "@/utils/setupDatabase";
 
 interface LocationData {
   latitude: number;
@@ -114,6 +115,11 @@ const AddCar = () => {
     setIsSubmitting(true);
 
     try {
+      // First, test database connection
+      const dbTest = await testDatabaseConnection();
+      if (!dbTest.success) {
+        throw new Error('Database connection failed. Please contact support.');
+      }
       const listingData = {
         ...formData,
         images,
@@ -189,11 +195,12 @@ const AddCar = () => {
       setLocation(null);
       setCurrentStep(1);
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting listing:', error);
+      const errorMessage = error?.message || error?.error_description || "Failed to submit listing. Please try again.";
       toast({
         title: "Error",
-        description: "Failed to submit listing. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
