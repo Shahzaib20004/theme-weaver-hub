@@ -1,0 +1,35 @@
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="faviconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700" />
+      <stop offset="50%" stop-color="#FFA500" />
+      <stop offset="100%" stop-color="#B8860B" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="32" height="32" fill="#1a1a1a" rx="6"/>
+  
+  <!-- Simplified Car Icon -->
+  <g transform="translate(4, 8)">
+    <!-- Car Body -->
+    <path 
+      d="M2 8 L14 8 L16 6 L20 6 L22 8 L24 8 L24 12 L22 12 L22 14 L20 14 L6 14 L4 14 L4 12 L2 12 Z" 
+      fill="url(#faviconGradient)"
+    />
+    <!-- Car Windows -->
+    <path 
+      d="M6 6 L8 4 L14 4 L16 6 L14 8 L8 8 Z" 
+      fill="url(#faviconGradient)"
+      opacity="0.8"
+    />
+    <!-- Wheels -->
+    <circle cx="6" cy="12" r="2" fill="url(#faviconGradient)" />
+    <circle cx="20" cy="12" r="2" fill="url(#faviconGradient)" />
+    <circle cx="6" cy="12" r="1" fill="#1a1a1a" />
+    <circle cx="20" cy="12" r="1" fill="#1a1a1a" />
+  </g>
+  
+  <!-- K letter in corner -->
+  <text x="24" y="28" font-size="8" font-weight="bold" fill="url(#faviconGradient)" font-family="serif">K</text>
+</svg>
