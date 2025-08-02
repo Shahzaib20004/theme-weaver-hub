@@ -26,6 +26,13 @@ const GoogleMap = ({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Check if API key is available
+    if (!import.meta.env.VITE_GOOGLE_MAPS_API_KEY) {
+      setLoading(false);
+      setError('Maps configuration in progress');
+      return;
+    }
+
     const initializeMap = async () => {
       try {
         const loader = new Loader({
@@ -130,8 +137,14 @@ const GoogleMap = ({
         className="flex items-center justify-center bg-dark-surface border border-border rounded-lg"
       >
         <div className="text-center">
-          <p className="text-red-500 mb-2">Map Error</p>
-          <p className="text-text-secondary text-sm">{error}</p>
+          <div className="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-3">
+            <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <p className="text-blue-400 mb-2">Interactive Map</p>
+          <p className="text-text-secondary text-sm">Coming Soon</p>
         </div>
       </div>
     );

@@ -153,10 +153,10 @@ const LocationPicker = ({ location, onLocationChange }: LocationPickerProps) => 
           Car Location
         </CardTitle>
         {!GOOGLE_MAPS_API_KEY && (
-          <div className="flex items-center gap-2 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
-            <AlertCircle className="w-4 h-4 text-yellow-500" />
-            <p className="text-sm text-yellow-600">
-              Google Maps API key not configured. Add VITE_GOOGLE_MAPS_API_KEY to your environment variables for full map functionality.
+          <div className="flex items-center gap-2 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+            <MapPin className="w-4 h-4 text-blue-500" />
+            <p className="text-sm text-blue-400">
+              Interactive map is being configured. You can add your location manually below.
             </p>
           </div>
         )}
@@ -231,8 +231,8 @@ const LocationPicker = ({ location, onLocationChange }: LocationPickerProps) => 
                     Lat: {location.latitude.toFixed(4)}, Lng: {location.longitude.toFixed(4)}
                   </p>
                   {!GOOGLE_MAPS_API_KEY && (
-                    <p className="text-xs text-yellow-500 mt-2">
-                      Configure Google Maps API for interactive map
+                    <p className="text-xs text-blue-400 mt-2">
+                      Interactive map coming soon
                     </p>
                   )}
                 </div>
