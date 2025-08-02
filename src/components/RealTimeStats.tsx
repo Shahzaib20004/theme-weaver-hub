@@ -73,21 +73,44 @@ const RealTimeStats = () => {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-      <div className="bg-card p-4 rounded-lg border border-border text-center">
-        <div className="text-2xl font-bold text-gold">{stats.totalCars}</div>
+      <div className="bg-card p-4 rounded-lg border border-border text-center hover:border-gold/50 transition-all duration-300 group">
+        <div className="text-2xl font-bold text-gold group-hover:scale-110 transition-transform duration-300">
+          {stats.totalCars}
+        </div>
         <div className="text-sm text-muted-foreground">{t('stats.totalVehicles')}</div>
+        <div className="flex items-center justify-center mt-2">
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          <span className="text-xs text-green-500 ml-1">Live</span>
+        </div>
       </div>
-      <div className="bg-card p-4 rounded-lg border border-border text-center">
-        <div className="text-2xl font-bold text-gold">{stats.totalBrands}</div>
+      <div className="bg-card p-4 rounded-lg border border-border text-center hover:border-gold/50 transition-all duration-300 group">
+        <div className="text-2xl font-bold text-gold group-hover:scale-110 transition-transform duration-300">
+          {stats.totalBrands}
+        </div>
         <div className="text-sm text-muted-foreground">{t('stats.carBrands')}</div>
+        <div className="flex items-center justify-center mt-2">
+          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+          <span className="text-xs text-blue-500 ml-1">Updated</span>
+        </div>
       </div>
-      <div className="bg-card p-4 rounded-lg border border-border text-center">
-        <div className="text-2xl font-bold text-gold">{stats.totalDealerships}</div>
+      <div className="bg-card p-4 rounded-lg border border-border text-center hover:border-gold/50 transition-all duration-300 group">
+        <div className="text-2xl font-bold text-gold group-hover:scale-110 transition-transform duration-300">
+          {stats.totalDealerships}
+        </div>
         <div className="text-sm text-muted-foreground">{t('stats.dealerships')}</div>
+        <div className="flex items-center justify-center mt-2">
+          <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+          <span className="text-xs text-purple-500 ml-1">Active</span>
+        </div>
       </div>
-      <div className="bg-card p-4 rounded-lg border border-border text-center">
-        <div className="text-2xl font-bold text-gold">{stats.averageRating}</div>
+      <div className="bg-card p-4 rounded-lg border border-border text-center hover:border-gold/50 transition-all duration-300 group">
+        <div className="text-2xl font-bold text-gold group-hover:scale-110 transition-transform duration-300">
+          {stats.averageRating}
+        </div>
         <div className="text-sm text-muted-foreground">{t('stats.averageRating')}</div>
+        <div className="flex items-center justify-center mt-2">
+          <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
+        </div>
       </div>
     </div>
   );

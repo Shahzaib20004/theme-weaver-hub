@@ -9,6 +9,7 @@ import "@/i18n/config";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
 import Cars from "./pages/Cars";
 import AddCar from "./pages/AddCar";
 import Admin from "./pages/Admin";
@@ -37,6 +38,7 @@ const App = () => (
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
