@@ -5,93 +5,62 @@ interface LogoProps {
 
 const Logo = ({ size = "md", className = "" }: LogoProps) => {
   const sizeClasses = {
-    sm: "w-40 h-16",
-    md: "w-52 h-20", 
-    lg: "w-64 h-28"
+    sm: "w-10 h-10",
+    md: "w-12 h-12", 
+    lg: "w-16 h-16"
   };
 
   return (
     <div className={`${sizeClasses[size]} ${className}`}>
       <svg 
-        viewBox="0 0 520 200" 
+        viewBox="0 0 120 120" 
         className="w-full h-full"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Gradient Definitions */}
+        {/* Gradient Definition */}
         <defs>
           <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#FFD700" />
             <stop offset="50%" stopColor="#FFA500" />
             <stop offset="100%" stopColor="#B8860B" />
           </linearGradient>
-          <linearGradient id="carGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFD700" />
-            <stop offset="30%" stopColor="#FFC107" />
-            <stop offset="70%" stopColor="#FF8F00" />
-            <stop offset="100%" stopColor="#E65100" />
-          </linearGradient>
+          <radialGradient id="bgGradient" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#2D2D2D" />
+            <stop offset="100%" stopColor="#1A1A1A" />
+          </radialGradient>
         </defs>
         
-        {/* Car Silhouette - Much Larger and More Detailed */}
-        <g transform="translate(30, 20)">
+        {/* Circular Background */}
+        <circle cx="60" cy="60" r="58" fill="url(#bgGradient)" stroke="url(#goldGradient)" strokeWidth="2"/>
+        
+        {/* Car Silhouette */}
+        <g transform="translate(20, 35)">
           {/* Main Car Body */}
           <path 
-            d="M20 80 L120 80 L130 60 L160 60 L170 50 L200 50 L210 60 L240 60 L250 80 L280 80 L285 90 L285 110 L270 110 L270 120 L250 120 L50 120 L30 120 L30 110 L15 110 L15 90 Z" 
-            fill="url(#carGradient)"
-            stroke="#B8860B"
-            strokeWidth="2"
+            d="M10 20 L30 20 L35 15 L45 15 L50 20 L60 20 L60 25 L50 25 L50 30 L45 30 L15 30 L10 30 L10 25 L5 25 L5 20 Z" 
+            fill="url(#goldGradient)"
           />
-          
           {/* Car Windows */}
           <path 
-            d="M50 60 L70 40 L120 40 L140 35 L180 35 L200 40 L220 60 L200 80 L70 80 Z" 
+            d="M15 15 L20 10 L35 10 L40 15 L35 20 L20 20 Z" 
             fill="url(#goldGradient)"
-            opacity="0.9"
+            opacity="0.8"
           />
-          
-          {/* Front Window Detail */}
-          <path 
-            d="M50 60 L70 45 L120 45 L140 60 L120 75 L70 75 Z" 
-            fill="url(#goldGradient)"
-            opacity="0.7"
-          />
-          
-          {/* Rear Window Detail */}
-          <path 
-            d="M160 60 L180 45 L220 45 L200 60 L180 75 L160 75 Z" 
-            fill="url(#goldGradient)"
-            opacity="0.7"
-          />
-          
           {/* Front Wheel */}
-          <circle cx="70" cy="110" r="18" fill="url(#carGradient)" stroke="#B8860B" strokeWidth="2"/>
-          <circle cx="70" cy="110" r="12" fill="#2C1810" />
-          <circle cx="70" cy="110" r="6" fill="url(#goldGradient)" />
-          
+          <circle cx="15" cy="25" r="4" fill="url(#goldGradient)" />
+          <circle cx="15" cy="25" r="2" fill="#1A1A1A" />
           {/* Rear Wheel */}
-          <circle cx="230" cy="110" r="18" fill="url(#carGradient)" stroke="#B8860B" strokeWidth="2"/>
-          <circle cx="230" cy="110" r="12" fill="#2C1810" />
-          <circle cx="230" cy="110" r="6" fill="url(#goldGradient)" />
-          
-          {/* Car Details */}
-          <rect x="25" y="95" width="8" height="6" fill="url(#goldGradient)" rx="2" />
-          <rect x="267" y="95" width="8" height="6" fill="url(#goldGradient)" rx="2" />
-          
-          {/* Headlights */}
-          <ellipse cx="20" cy="85" rx="6" ry="8" fill="#FFFFFF" opacity="0.9" />
-          <ellipse cx="280" cy="85" rx="6" ry="8" fill="#FF6B6B" opacity="0.9" />
-          
-          {/* Car Grille */}
-          <rect x="15" y="75" width="10" height="15" fill="url(#goldGradient)" opacity="0.8" />
+          <circle cx="45" cy="25" r="4" fill="url(#goldGradient)" />
+          <circle cx="45" cy="25" r="2" fill="#1A1A1A" />
         </g>
         
-        {/* Main Text "Kaar.Rental" - Much Larger */}
-        <text x="40" y="165" fontSize="36" fontWeight="bold" fill="url(#goldGradient)" fontFamily="serif">
+        {/* Main Text "Kaar.Rental" */}
+        <text x="60" y="75" fontSize="10" fontWeight="bold" fill="url(#goldGradient)" fontFamily="serif" textAnchor="middle">
           Kaar.Rental
         </text>
         
         {/* Tagline */}
-        <text x="40" y="185" fontSize="14" fill="url(#goldGradient)" fontFamily="sans-serif" letterSpacing="3">
+        <text x="60" y="87" fontSize="5" fill="url(#goldGradient)" fontFamily="sans-serif" letterSpacing="1" textAnchor="middle">
           RELIABLE RIDES ANYTIME
         </text>
       </svg>
