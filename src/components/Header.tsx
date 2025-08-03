@@ -59,12 +59,12 @@ const Header = () => {
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2 text-foreground">
-                <Phone className="w-3 h-3 text-green-500" />
-                <span>03090017510</span>
-              </div>
-              <div className="flex items-center gap-2 text-foreground">
                 <MessageCircle className="w-3 h-3 text-blue-500" />
                 <span>Live Support 24/7</span>
+              </div>
+              <div className="flex items-center gap-2 text-foreground">
+                <Shield className="w-3 h-3 text-green-500" />
+                <span>Pakistan's #1 Car Marketplace</span>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -77,10 +77,22 @@ const Header = () => {
                   href="https://www.facebook.com/share/16sg1pXed3/?mibextid=wwXIfr"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-6 h-6 rounded-full bg-gold/20 hover:bg-gold/30 flex items-center justify-center transition-colors"
+                  className="w-6 h-6 rounded-full bg-blue-500/20 hover:bg-blue-500 text-blue-500 hover:text-white flex items-center justify-center transition-colors"
+                  title="Follow us on Facebook"
                 >
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" className="text-gold">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://www.tiktok.com/@kaar.rentals"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-6 h-6 rounded-full bg-black/20 hover:bg-black text-black hover:text-white flex items-center justify-center transition-colors"
+                  title="Follow us on TikTok"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
                   </svg>
                 </a>
                 <a
@@ -334,13 +346,13 @@ const Header = () => {
             {/* Mobile Contact */}
             <div className="mt-4 pt-4 border-t border-border">
               <div className="flex flex-col gap-3">
-                <a href="tel:03090017510" className="flex items-center gap-3 px-4 py-2 text-foreground">
-                  <Phone className="w-4 h-4 text-green-500" />
-                  <span>03090017510</span>
-                </a>
                 <div className="flex items-center gap-3 px-4 py-2 text-foreground">
                   <MessageCircle className="w-4 h-4 text-blue-500" />
                   <span>24/7 Support Available</span>
+                </div>
+                <div className="flex items-center gap-3 px-4 py-2 text-foreground">
+                  <Shield className="w-4 h-4 text-green-500" />
+                  <span>Pakistan's Most Trusted</span>
                 </div>
               </div>
             </div>
