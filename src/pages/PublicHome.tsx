@@ -1,239 +1,334 @@
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { Car, MapPin, Star, Shield, Clock, Phone, Users, Award } from "lucide-react";
+import { Car, MapPin, Star, Shield, Clock, Phone, Users, Award, ArrowRight, Instagram, Facebook, Twitter, Mail } from "lucide-react";
 import Logo from "@/components/Logo";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 
 const PublicHome = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const floatingVariants = {
+    initial: { y: 0 },
+    animate: {
+      y: [-10, 10, -10],
+      transition: {
+        duration: 4,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-dark-surface via-background to-dark-surface mobile-scroll">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5 relative overflow-hidden">
       {/* Header */}
-      <header className="bg-dark-surface/90 backdrop-blur-sm border-b border-border sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Logo size="lg" />
-              <div>
-                <h1 className="text-xl md:text-2xl font-bold text-gold">Kaar.Rentals</h1>
-                <p className="text-xs text-text-secondary">Pakistan's #1 Car Marketplace</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link to="/login">
-                <Button variant="ghost" className="text-gold hover:text-gold/80">
-                  Login
-                </Button>
-              </Link>
-              <Link to="/signup">
-                <Button className="bg-gradient-to-r from-gold to-gold-dark hover:from-gold/90 hover:to-gold-dark/90 text-dark font-semibold">
-                  Get Started
-                </Button>
-              </Link>
+      <motion.header 
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50"
+      >
+        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Logo size="lg" />
+            <div>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                Kaar.Rentals
+              </h1>
+              <p className="text-xs text-muted-foreground">Premium Car Rentals in Pakistan</p>
             </div>
           </div>
+          <div className="flex items-center gap-4">
+            <Link to="/login">
+              <Button variant="outline" size="sm">Login</Button>
+            </Link>
+            <Link to="/signup">
+              <Button size="sm" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
+                Get Started
+              </Button>
+            </Link>
+          </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* Hero Section */}
-      <section className="relative py-16 md:py-20 px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
-            Pakistan's Premier
-            <span className="bg-gradient-to-r from-gold to-gold-dark bg-clip-text text-transparent">
-              {" "}Car Marketplace{" "}
-            </span>
-          </h1>
-          <p className="text-lg md:text-xl text-text-secondary mb-8 max-w-3xl mx-auto">
-            Connect directly with verified dealers across Pakistan. No middleman, better prices, 
-            trusted experience with JazzCash, EasyPaisa, and cash payments.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Link to="/signup">
-              <Button size="lg" className="bg-gradient-to-r from-gold to-gold-dark hover:from-gold/90 hover:to-gold-dark/90 text-dark font-semibold text-lg px-8 py-3 btn-pakistani">
-                Start Shopping Now
-              </Button>
-            </Link>
-            <Link to="/login">
-              <Button size="lg" variant="outline" className="border-gold text-gold hover:bg-gold hover:text-dark text-lg px-8 py-3">
-                I Have An Account
-              </Button>
-            </Link>
-          </div>
-
-          {/* Quick Features for Pakistani Market */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            <div className="bg-dark-elevated/50 backdrop-blur-sm rounded-xl p-4 border border-green-600/20">
-              <div className="text-2xl mb-2">🇵🇰</div>
-              <div className="text-sm font-medium text-foreground">100% Pakistani</div>
-              <div className="text-xs text-text-secondary">Owned & Operated</div>
-            </div>
-            <div className="bg-dark-elevated/50 backdrop-blur-sm rounded-xl p-4 border border-blue-500/20">
-              <div className="text-2xl mb-2">💳</div>
-              <div className="text-sm font-medium text-foreground">JazzCash & EasyPaisa</div>
-              <div className="text-xs text-text-secondary">Local Payments</div>
-            </div>
-            <div className="bg-dark-elevated/50 backdrop-blur-sm rounded-xl p-4 border border-green-500/20">
-              <div className="text-2xl mb-2">📱</div>
-              <div className="text-sm font-medium text-foreground">WhatsApp Support</div>
-              <div className="text-xs text-text-secondary">24/7 Available</div>
-            </div>
-            <div className="bg-dark-elevated/50 backdrop-blur-sm rounded-xl p-4 border border-gold/20">
-              <div className="text-2xl mb-2">🕌</div>
-              <div className="text-sm font-medium text-foreground">Islamic Finance</div>
-              <div className="text-xs text-text-secondary">Sharia Compliant</div>
-            </div>
-          </div>
+      <section className="pt-32 pb-20 px-6">
+        <div className="container mx-auto text-center">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="max-w-4xl mx-auto"
+          >
+            <motion.div variants={itemVariants}>
+              <Badge variant="secondary" className="mb-6 px-4 py-2 text-sm">
+                🇵🇰 Pakistan's Premier Car Rental Platform
+              </Badge>
+            </motion.div>
+            
+            <motion.h1 
+              variants={itemVariants}
+              className="text-5xl md:text-7xl font-bold mb-8 leading-tight"
+            >
+              <span className="bg-gradient-to-r from-primary via-primary/80 to-accent bg-clip-text text-transparent">
+                Premium Cars
+              </span>
+              <br />
+              <span className="text-foreground">At Your Service</span>
+            </motion.h1>
+            
+            <motion.p 
+              variants={itemVariants}
+              className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed"
+            >
+              Experience luxury and convenience with Pakistan's most trusted car rental platform. 
+              Connect with verified dealerships across the country.
+            </motion.p>
+            
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link to="/signup">
+                <Button size="lg" className="group bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 px-8 py-6 text-lg">
+                  Start Your Journey
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link to="/login">
+                <Button variant="outline" size="lg" className="px-8 py-6 text-lg">
+                  Browse Cars
+                </Button>
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
+
+      {/* Floating Cars Animation */}
+      <motion.div
+        variants={floatingVariants}
+        initial="initial"
+        animate="animate"
+        className="absolute top-1/2 left-10 text-6xl opacity-10 hidden lg:block"
+      >
+        🚗
+      </motion.div>
+      <motion.div
+        variants={floatingVariants}
+        initial="initial"
+        animate="animate"
+        className="absolute top-1/3 right-20 text-4xl opacity-10 hidden lg:block"
+        style={{ animationDelay: '2s' }}
+      >
+        🚙
+      </motion.div>
 
       {/* Stats Section */}
-      <section className="py-12 md:py-16 px-6 bg-dark-elevated/30">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-gold mb-2">1,500+</div>
-              <div className="text-sm text-text-secondary">Available Cars</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-gold mb-2">500+</div>
-              <div className="text-sm text-text-secondary">Verified Dealers</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-gold mb-2">50,000+</div>
-              <div className="text-sm text-text-secondary">Happy Customers</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-gold mb-2">4.8</div>
-              <div className="text-sm text-text-secondary">Customer Rating</div>
-            </div>
+      <motion.section 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="py-20 px-6 bg-card/30"
+      >
+        <div className="container mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { icon: Car, label: "Premium Cars", value: "500+" },
+              { icon: Users, label: "Happy Customers", value: "10K+" },
+              { icon: MapPin, label: "Cities Covered", value: "25+" },
+              { icon: Star, label: "Average Rating", value: "4.9" }
+            ].map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="text-center"
+              >
+                <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <stat.icon className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-3xl font-bold text-primary mb-2">{stat.value}</h3>
+                <p className="text-muted-foreground">{stat.label}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Features Section */}
-      <section className="py-16 md:py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Why Choose Kaar.Rentals?
-            </h2>
-            <p className="text-lg md:text-xl text-text-secondary">
-              Built specifically for the Pakistani market
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="py-20 px-6"
+      >
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Why Choose Kaar.Rentals?</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Experience the best car rental service in Pakistan with our premium features
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            <Card className="marketplace-card bg-card border-border hover:border-gold/50 transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center mb-4">
-                  <Shield className="w-6 h-6 text-gold" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">100% Verified Dealers</h3>
-                <p className="text-text-secondary">All dealers verified with CNIC, business license, and location inspection.</p>
-              </CardContent>
-            </Card>
-
-            <Card className="marketplace-card bg-card border-border hover:border-gold/50 transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center mb-4">
-                  <Car className="w-6 h-6 text-gold" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">Premium Car Collection</h3>
-                <p className="text-text-secondary">Toyota, Honda, Suzuki, and other popular brands across Pakistan.</p>
-              </CardContent>
-            </Card>
-
-            <Card className="marketplace-card bg-card border-border hover:border-gold/50 transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center mb-4">
-                  <Clock className="w-6 h-6 text-gold" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">24/7 Urdu Support</h3>
-                <p className="text-text-secondary">Local support team available in English and Urdu languages.</p>
-              </CardContent>
-            </Card>
-
-            <Card className="marketplace-card bg-card border-border hover:border-gold/50 transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center mb-4">
-                  <MapPin className="w-6 h-6 text-gold" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">All Major Cities</h3>
-                <p className="text-text-secondary">Karachi, Lahore, Islamabad, Rawalpindi, Faisalabad, and more.</p>
-              </CardContent>
-            </Card>
-
-            <Card className="marketplace-card bg-card border-border hover:border-gold/50 transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center mb-4">
-                  <Star className="w-6 h-6 text-gold" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">Best Prices Guaranteed</h3>
-                <p className="text-text-secondary">Direct dealer prices with JazzCash, EasyPaisa, and cash options.</p>
-              </CardContent>
-            </Card>
-
-            <Card className="marketplace-card bg-card border-border hover:border-gold/50 transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center mb-4">
-                  <Users className="w-6 h-6 text-gold" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">Trusted Platform</h3>
-                <p className="text-text-secondary">50,000+ satisfied customers with 4.8-star rating across Pakistan.</p>
-              </CardContent>
-            </Card>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Verified Dealerships",
+                description: "All our partner dealerships are thoroughly verified for your safety and peace of mind",
+                icon: "🛡️"
+              },
+              {
+                title: "Premium Fleet",
+                description: "Choose from luxury sedans, SUVs, and sports cars from top international brands",
+                icon: "🚗"
+              },
+              {
+                title: "24/7 Support",
+                description: "Round-the-clock customer support to assist you throughout your rental experience",
+                icon: "🕐"
+              }
+            ].map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -10 }}
+                className="group"
+              >
+                <Card className="h-full bg-card hover:bg-card/80 transition-all duration-300 group-hover:shadow-lg">
+                  <CardContent className="p-8 text-center">
+                    <div className="text-6xl mb-6">{feature.icon}</div>
+                    <h3 className="text-2xl font-bold mb-4">{feature.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-20 px-6 bg-gradient-to-r from-gold/10 to-gold-dark/10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Ready to Find Your Perfect Car?
-          </h2>
-          <p className="text-lg md:text-xl text-text-secondary mb-8">
-            Join thousands of satisfied customers across Pakistan and find your dream car today.
+      <motion.section 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="py-20 px-6 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10"
+      >
+        <div className="container mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-6">Ready to Hit the Road?</h2>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Join thousands of satisfied customers who trust Kaar.Rentals for their premium car rental needs
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link to="/signup">
-              <Button size="lg" className="bg-gradient-to-r from-gold to-gold-dark hover:from-gold/90 hover:to-gold-dark/90 text-dark font-semibold text-lg px-8 py-3 btn-pakistani">
-                Create Free Account
+          <Link to="/signup">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button size="lg" className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 px-12 py-6 text-lg">
+                Start Renting Today
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            </Link>
-            <div className="flex items-center gap-2 text-text-secondary">
-              <Phone className="w-4 h-4 text-green-500" />
-              <span>Call: 03090017510</span>
-            </div>
-          </div>
+            </motion.div>
+          </Link>
         </div>
-      </section>
+      </motion.section>
 
       {/* Footer */}
-      <footer className="bg-dark-surface border-t border-border py-8 md:py-12 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-3">
-              <Logo size="md" />
-              <div>
-                <h3 className="text-lg font-bold text-gold">Kaar.Rentals</h3>
-                <p className="text-sm text-text-secondary">© 2025 Pakistan's Premier Car Marketplace</p>
+      <footer className="bg-card/50 border-t border-border py-16 px-6">
+        <div className="container mx-auto">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="col-span-2">
+              <div className="flex items-center gap-3 mb-6">
+                <Logo size="md" />
+                <div>
+                  <h3 className="text-xl font-bold">Kaar.Rentals</h3>
+                  <p className="text-sm text-muted-foreground">Premium Car Rentals</p>
+                </div>
+              </div>
+              <p className="text-muted-foreground mb-6 max-w-md">
+                Pakistan's most trusted platform for premium car rentals. 
+                Connecting customers with verified dealerships across the country.
+              </p>
+              <div className="flex gap-4">
+                {[
+                  { icon: Instagram, href: "#", color: "hover:text-pink-500" },
+                  { icon: Facebook, href: "#", color: "hover:text-blue-500" },
+                  { icon: Twitter, href: "#", color: "hover:text-blue-400" }
+                ].map((social, index) => (
+                  <motion.a
+                    key={index}
+                    href={social.href}
+                    whileHover={{ scale: 1.2, rotate: 5 }}
+                    className={`p-3 rounded-full bg-primary/10 text-primary transition-colors ${social.color}`}
+                  >
+                    <social.icon className="h-5 w-5" />
+                  </motion.a>
+                ))}
               </div>
             </div>
             
-            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-sm">
-              <Link to="/privacy" className="text-text-secondary hover:text-gold transition-colors">
-                Privacy Policy
-              </Link>
-              <Link to="/terms" className="text-text-secondary hover:text-gold transition-colors">
-                Terms of Service
-              </Link>
-              <a href="tel:03090017510" className="text-text-secondary hover:text-gold transition-colors">
-                📞 03090017510
-              </a>
-              <span className="text-text-secondary">🇵🇰 Made in Pakistan</span>
+            <div>
+              <h4 className="font-semibold mb-4">Quick Links</h4>
+              <div className="space-y-2">
+                {["About Us", "Our Services", "Contact", "Privacy Policy", "Terms"].map((link) => (
+                  <div key={link}>
+                    <Link to={`/${link.toLowerCase().replace(" ", "-")}`} 
+                          className="text-muted-foreground hover:text-primary transition-colors">
+                      {link}
+                    </Link>
+                  </div>
+                ))}
+              </div>
             </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Contact Info</h4>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Phone className="h-4 w-4" />
+                  <span>+92 300 123 4567</span>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Mail className="h-4 w-4" />
+                  <span>info@kaar.rentals</span>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <MapPin className="h-4 w-4" />
+                  <span>Pakistan</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-border mt-12 pt-8 text-center text-muted-foreground">
+            <p>&copy; 2024 Kaar.Rentals. All rights reserved.</p>
           </div>
         </div>
       </footer>
